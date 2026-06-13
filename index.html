@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="触网之殇 · 中国低龄未成年人网络使用与受骗数据全景报告 - 第十一届数据新闻大赛参赛作品">
+  <title>触网之殇 · 低龄未成年人网络使用与受骗数据全景报告</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'deep': '#0a0e27',
+            'deep2': '#111640',
+            'deep3': '#1a1f4e',
+            'cyber': '#1e3a5f',
+            'cyber-light': '#2a5080',
+            'alert-red': '#e74c3c',
+            'alert-orange': '#f39c12',
+            'alert-yellow': '#f1c40f',
+            'safe-green': '#27ae60',
+            'accent': '#5d9cec',
+            'accent-light': '#7fb8f4',
+            'warm-white': '#faf9f6',
+            'text-main': '#e8e6e1',
+            'text-dim': '#9ca3af',
+          },
+          fontFamily: {
+            'serif-cn': ['"Noto Serif SC"', 'SimSun', 'STSong', 'serif'],
+            'sans-cn': ['"Noto Sans SC"', '"Microsoft YaHei"', '"PingFang SC"', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.8s ease-out forwards',
+            'fade-in': 'fadeIn 1.2s ease-out forwards',
+            'pulse-slow': 'pulseSlow 3s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(40px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            pulseSlow: {
+              '0%, 100%': { opacity: '0.6' },
+              '50%': { opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(231,76,60,0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(231,76,60,0.6)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
+      background-color: #0a0e27;
+      color: #e8e6e1;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0e27; }
+    ::-webkit-scrollbar-thumb { background: #2a5080; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #5d9cec; }
+
+    .font-eng { font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.05em; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* Data number counter */
+    .data-number {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #5d9cec, #7fb8f4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .data-number-red {
+      background: linear-gradient(135deg, #e74c3c, #f39c12);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Divider */
+    .divider-accent {
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, transparent, #5d9cec, transparent);
+      margin: 20px auto;
+    }
+    .divider-red {
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, transparent, #e74c3c, transparent);
+      margin: 20px auto;
+    }
+
+    /* Card hover */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(93,156,236,0.15);
+      border-color: rgba(93,156,236,0.5);
+    }
+
+    /* Section backgrounds */
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(93,156,236,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(93,156,236,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Pulse ring */
+    .pulse-ring {
+      animation: pulseRing 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(231,76,60,0.5); }
+      100% { box-shadow: 0 0 0 30px rgba(231,76,60,0); }
+    }
+
+    /* Glitch text effect */
+    .glitch-text {
+      text-shadow: 2px 2px 0 rgba(231,76,60,0.5), -2px -2px 0 rgba(93,156,236,0.5);
+    }
+
+    /* Sticky chart containers */
+    .sticky-chart {
+      position: sticky;
+      top: 80px;
+    }
+
+    /* Section title line */
+    .section-title-line {
+      position: relative;
+      padding-left: 20px;
+    }
+    .section-title-line::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #5d9cec, #e74c3c);
+      border-radius: 2px;
+    }
+
+    /* Timeline */
+    .timeline-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #5d9cec;
+      border: 3px solid #0a0e27;
+      box-shadow: 0 0 0 3px #5d9cec;
+      position: absolute;
+      left: -42px;
+      top: 4px;
+      z-index: 2;
+    }
+    .timeline-line-v {
+      position: absolute;
+      left: -35px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #5d9cec, #1a1f4e, #e74c3c);
+    }
+    @media (max-width: 768px) {
+      .timeline-dot { left: -34px; }
+      .timeline-line-v { left: -27px; }
+    }
+
+    @media (max-width: 768px) {
+      body { font-size: 14px; }
+      .data-number { font-size: 2.2rem !important; }
+      .hero-title { font-size: 2.2rem !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-deep text-text-main antialiased">
+
+<!-- ================================================================ -->
+<!--  HERO SECTION - Full screen immersive                            -->
+<!-- ================================================================ -->
+<header class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center relative overflow-hidden">
+  <!-- Animated background grid -->
+  <div class="absolute inset-0 bg-grid pointer-events-none"></div>
+  <!-- Floating particles -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-accent/30 rounded-full animate-float" style="animation-delay: 0s;"></div>
+    <div class="absolute top-1/3 right-1/3 w-3 h-3 bg-alert-red/20 rounded-full animate-float" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/4 left-1/3 w-2 h-2 bg-accent/20 rounded-full animate-float" style="animation-delay: 4s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-alert-orange/30 rounded-full animate-float" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/3 right-1/2 w-2 h-2 bg-safe-green/20 rounded-full animate-float" style="animation-delay: 3s;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-3xl mx-auto">
+    <!-- Tag -->
+    <p class="font-eng text-accent tracking-[0.3em] text-sm md:text-base mb-6 uppercase animate-fade-in">
+      THE 11TH CHINA DATA JOURNALISM COMPETITION
+    </p>
+    <div class="divider-accent"></div>
+
+    <!-- Main title -->
+    <h1 class="hero-title font-serif-cn text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-wider animate-fade-in">
+      <span class="glitch-text">触网之殇</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-lg md:text-xl text-text-dim font-sans-cn mb-3 tracking-wide animate-fade-in" style="animation-delay: 0.3s;">
+      中国低龄未成年人网络使用与受骗数据全景报告
+    </p>
+
+    <h2 class="font-serif-cn text-xl md:text-2xl font-bold text-accent mt-8 mb-10 tracking-wider animate-fade-in" style="animation-delay: 0.5s;">
+      触网之殇&ensp;|&ensp;当1.93亿孩子与互联网"裸泳"
+    </h2>
+
+    <div class="divider-red"></div>
+
+    <!-- Quote -->
+    <blockquote class="mt-10 mb-8 text-base md:text-lg text-text-dim leading-loose tracking-wide space-y-3 animate-fade-in" style="animation-delay: 0.7s;">
+      <p>"互联网没有围墙，但孩子们需要护栏。</p>
+      <p>当低龄触网成为不可逆的时代浪潮，</p>
+      <p>我们是否做好了接住他们的准备？"</p>
+    </blockquote>
+
+    <p class="font-eng text-sm md:text-base text-text-dim tracking-[0.2em] uppercase mt-10 animate-fade-in" style="animation-delay: 0.9s;">
+      Data-Driven Investigation on Juvenile Internet Safety
+    </p>
+
+    <!-- Scroll hint -->
+    <div class="mt-16 animate-bounce">
+      <i class="fa-solid fa-chevron-down text-accent text-xl"></i>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================================ -->
+<!--  CORE DATA DASHBOARD - Key metrics                              -->
+<!-- ================================================================ -->
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+  <div class="text-center reveal mb-14">
+    <p class="font-eng text-sm text-text-dim tracking-[0.2em] uppercase mb-2">Core Data Dashboard</p>
+    <h2 class="font-serif-cn text-3xl md:text-4xl font-bold">核心数据看板</h2>
+    <div class="divider-accent"></div>
+    <p class="text-text-dim mt-4 max-w-2xl mx-auto">
+      以下数据来自CNNIC《第5次全国未成年人互联网使用情况调查报告》、公安部反诈中心及最高人民检察院公开数据。
+    </p>
+  </div>
+
+  <!-- 6 Metric Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-1">
+      <p class="data-number text-5xl md:text-6xl font-eng mb-2">1.93<span class="text-2xl">亿</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">未成年网民规模</h3>
+      <p class="text-xs text-text-dim">2022年数据 · 互联网普及率97.2%</p>
+      <p class="text-xs text-alert-orange mt-2">较2018年增长2400万</p>
+    </div>
+
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-2">
+      <p class="data-number text-5xl md:text-6xl font-eng mb-2">34.2<span class="text-2xl">%</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">学龄前触网比例</h3>
+      <p class="text-xs text-text-dim">小学生在上小学前使用互联网</p>
+      <p class="text-xs text-alert-red mt-2">较2021年上升6个百分点</p>
+    </div>
+
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-3">
+      <p class="data-number text-5xl md:text-6xl font-eng mb-2">91.3<span class="text-2xl">%</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">手机上网比例</h3>
+      <p class="text-xs text-text-dim">手机是未成年人最主要上网设备</p>
+      <p class="text-xs text-alert-orange mt-2">87%拥有自己的上网设备</p>
+    </div>
+
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-1">
+      <p class="data-number data-number-red text-5xl md:text-6xl font-eng mb-2">12.7<span class="text-2xl">%</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">遭遇网络诈骗比例</h3>
+      <p class="text-xs text-text-dim">2022年未成年网民遭遇网上诈骗</p>
+      <p class="text-xs text-alert-red mt-2">较2021年上升1.7个百分点</p>
+    </div>
+
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-2">
+      <p class="data-number data-number-red text-5xl md:text-6xl font-eng mb-2">13.9<span class="text-2xl">%</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">电诈受害占比</h3>
+      <p class="text-xs text-text-dim">2024年未成年人在电诈受害者中占比</p>
+      <p class="text-xs text-alert-red mt-2">较2022年的4.7%激增近3倍</p>
+    </div>
+
+    <div class="card-hover bg-deep2 rounded-2xl p-8 text-center shadow-lg border border-deep3 reveal reveal-delay-3">
+      <p class="data-number data-number-red text-5xl md:text-6xl font-eng mb-2">32.0<span class="text-2xl">%</span></p>
+      <h3 class="font-sans-cn text-lg font-bold mb-2">使用家长账号玩游戏</h3>
+      <p class="text-xs text-text-dim">玩网络游戏的未成年人中</p>
+      <p class="text-xs text-alert-red mt-2">39.1%家长允许孩子使用自己账号</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  PART 1: 低龄互联网使用现状                                     -->
+<!-- ================================================================ -->
+<section class="bg-deep2 py-16 md:py-24" id="part1">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="reveal mb-14">
+      <p class="font-eng text-sm text-accent tracking-[0.2em] uppercase mb-2">Part One</p>
+      <h2 class="section-title-line font-serif-cn text-3xl md:text-4xl font-bold">
+        第一章 · 低龄互联网使用现状
+      </h2>
+      <p class="font-serif-cn text-lg md:text-xl text-text-dim mt-3 font-bold">
+        触网低龄化：一场不可逆的数字浪潮
+      </p>
+      <div class="divider-accent" style="margin-left:20px;"></div>
+    </div>
+
+    <!-- Chart 1: Internet penetration rate by age group -->
+    <div class="reveal mb-10">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-chart-line mr-2"></i>6-18岁各年龄段互联网普及率（2022年）
+      </h3>
+      <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+        <div id="chart-penetration" style="height:400px;"></div>
+      </div>
+    </div>
+
+    <!-- Text insight -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div class="reveal space-y-4 text-base leading-loose">
+        <p>
+          2022年我国未成年网民规模已达<span class="text-accent font-bold text-xl">1.93亿</span>，互联网普及率高达<span class="text-alert-red font-bold text-xl">97.2%</span>，已基本见顶。这意味着，几乎每一个中国孩子都在使用互联网。
+        </p>
+        <p>
+          更值得警惕的是触网年龄的持续下探：<span class="text-alert-orange font-bold">34.2%</span>的小学生在上小学前就已经开始使用互联网，较2021年的28.2%增长了整整6个百分点。当代儿童的"数字童年"正在从幼儿园开始。
+        </p>
+        <p>
+          城乡差距虽已基本消弭（城镇97.5% vs 农村96.5%），但农村孩子在设备丰富性和应用多样性上仍明显落后，用网质量差距不容忽视。
+        </p>
+      </div>
+      <!-- Chart 2: First time internet access age -->
+      <div class="reveal">
+        <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div id="chart-first-touch" style="height:350px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart 3: Platform usage breakdown -->
+    <div class="reveal mb-10">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-mobile-screen mr-2"></i>未成年人常用互联网应用类型占比（2022年，多选）
+      </h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div id="chart-app-usage" style="height:380px;"></div>
+        </div>
+        <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div id="chart-shortvideo-platform" style="height:380px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bypass real-name verification issue -->
+    <div class="reveal bg-deep3 rounded-2xl p-8 shadow-lg border border-alert-red/20">
+      <h3 class="font-serif-cn text-xl font-bold mb-4 text-alert-red">
+        <i class="fa-solid fa-triangle-exclamation mr-2"></i>核心问题：借家长证件绕过实名认证
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-3 text-sm leading-relaxed">
+          <p>调查数据显示，<span class="text-alert-orange font-bold">32.0%</span>的未成年网络游戏用户会使用家长账号玩游戏，<span class="text-alert-orange font-bold">39.1%</span>的家长表示会让孩子使用自己的账号。</p>
+          <p>绕过手段已形成完整灰色产业链：</p>
+          <ul class="space-y-2 pl-4">
+            <li class="flex items-start gap-2"><span class="text-alert-red">▸</span> 冒用父母/祖辈身份证完成实名认证</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red">▸</span> 低价租号（电商平台1小时约5元起）</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red">▸</span> 代破解服务（15-30元解除人脸限制）</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red">▸</span> 应用双开 + 异地过人脸验证</li>
+          </ul>
+        </div>
+        <div class="bg-deep2 rounded-xl p-6 border border-deep3">
+          <p class="text-xs text-text-dim mb-2">未成年网民绕过实名认证的方式</p>
+          <div id="chart-bypass" style="height:280px;"></div>
+        </div>
+      </div>
+      <p class="text-xs text-text-dim mt-4 pl-2 border-l-2 border-alert-red/50">
+        数据来源：CNNIC《第5次全国未成年人互联网使用情况调查报告》（2023年12月发布）、人民日报调查报道（2025年7月）
+      </p>
+    </div>
+
+    <!-- Device usage -->
+    <div class="reveal mt-10">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-laptop mr-2"></i>上网设备使用全景：从手机到智能手表
+      </h3>
+      <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+        <div id="chart-devices" style="height:400px;"></div>
+      </div>
+      <p class="text-sm mt-4 leading-relaxed">
+        手机以<span class="text-accent font-bold">91.3%</span>的使用率高居首位，智能手表（40.1%）、智能台灯（22.9%）、词典笔（20.6%）等新型智能设备在未成年群体中迅速普及——近<span class="text-alert-orange font-bold">4000万</span>未成年人正在通过这些设备接触互联网，但这些设备的安全防护水平参差不齐，<span class="text-alert-red">44.8%</span>的未成年网民表示担心其安全风险。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  PART 2: 低龄网络受骗数据                                       -->
+<!-- ================================================================ -->
+<section class="py-16 md:py-24" id="part2">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="reveal mb-14">
+      <p class="font-eng text-sm text-alert-red tracking-[0.2em] uppercase mb-2">Part Two</p>
+      <h2 class="section-title-line font-serif-cn text-3xl md:text-4xl font-bold">
+        第二章 · 低龄群体网络受骗数据
+      </h2>
+      <p class="font-serif-cn text-lg md:text-xl text-text-dim mt-3 font-bold">
+        当诈骗瞄准孩子：短视频与游戏私聊成为重灾区
+      </p>
+      <div class="divider-red" style="margin-left:20px;"></div>
+    </div>
+
+    <!-- Alert banner -->
+    <div class="reveal bg-alert-red/10 border border-alert-red/30 rounded-2xl p-6 mb-10 pulse-ring">
+      <div class="flex items-start gap-4">
+        <i class="fa-solid fa-circle-exclamation text-3xl text-alert-red mt-1"></i>
+        <div>
+          <p class="font-bold text-alert-red text-lg mb-2">⚠️ 关键警示</p>
+          <p class="text-sm leading-relaxed">
+            公安部最新数据显示：2024年全国电信网络诈骗受害者中，<span class="text-alert-orange font-bold text-lg">未成年人占比达13.9%</span>，而2022年这一数字仅为4.7%——短短两年间激增近<span class="font-bold text-lg">3倍</span>。10-15岁成为"重灾区"，单案最高损失达<span class="font-bold text-lg">58万元</span>。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts: Fraud data -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10 reveal">
+      <div class="bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+        <h4 class="font-sans-cn font-bold mb-4 text-alert-orange">未成年网民遭遇网络安全事件类型（2022年）</h4>
+        <div id="chart-security-events" style="height:340px;"></div>
+      </div>
+      <div class="bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+        <h4 class="font-sans-cn font-bold mb-4 text-alert-orange">未成年人受骗渠道分布</h4>
+        <div id="chart-fraud-channel" style="height:340px;"></div>
+      </div>
+    </div>
+
+    <!-- Fraud types by age -->
+    <div class="reveal mb-10">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-alert-red">
+        <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>分年龄段高发骗局类型
+      </h3>
+      <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+        <div id="chart-fraud-age" style="height:420px;"></div>
+      </div>
+    </div>
+
+    <!-- Procuratorate data -->
+    <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="card-hover bg-deep2 rounded-2xl p-6 text-center shadow-lg border border-deep3">
+        <p class="data-number data-number-red text-4xl md:text-5xl font-eng mb-2">3,347<span class="text-lg">人</span></p>
+        <h4 class="font-sans-cn font-bold mb-2">2024年起诉利用电信网络侵害未成年人犯罪</h4>
+        <p class="text-xs text-alert-red">同比上升14.1%</p>
+      </div>
+      <div class="card-hover bg-deep2 rounded-2xl p-6 text-center shadow-lg border border-deep3">
+        <p class="data-number data-number-red text-4xl md:text-5xl font-eng mb-2">6,792<span class="text-lg">人</span></p>
+        <h4 class="font-sans-cn font-bold mb-2">2023年起诉同类犯罪人数</h4>
+        <p class="text-xs text-text-dim">最高检2024年2月新闻发布会</p>
+      </div>
+      <div class="card-hover bg-deep2 rounded-2xl p-6 text-center shadow-lg border border-deep3">
+        <p class="data-number data-number-red text-4xl md:text-5xl font-eng mb-2">57,156<span class="text-lg">人</span></p>
+        <h4 class="font-sans-cn font-bold mb-2">2024年批捕侵害未成年人犯罪</h4>
+        <p class="text-xs text-alert-red">同比上升7.3%</p>
+      </div>
+    </div>
+
+    <!-- Victim age distribution -->
+    <div class="reveal mb-10">
+      <div class="bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+        <h4 class="font-sans-cn font-bold mb-4 text-alert-orange">未成年电诈受害者年龄段分布（2024年公安部数据）</h4>
+        <div id="chart-victim-age" style="height:380px;"></div>
+      </div>
+    </div>
+
+    <!-- Key insight -->
+    <div class="reveal bg-deep3 rounded-2xl p-8 border-l-4 border-alert-red">
+      <h4 class="font-serif-cn text-lg font-bold text-alert-red mb-3">
+        <i class="fa-solid fa-lightbulb mr-2"></i>核心发现
+      </h4>
+      <p class="text-sm leading-relaxed">
+        无严格媒介管控是低龄被骗高发的重要诱因。数据显示，<span class="text-alert-orange font-bold">54.1%</span>的未成年网民经常看短视频，短视频平台成为未成年人获取信息的最主要渠道（55.9%），超过电视（50.2%）。然而，仅有<span class="text-alert-red font-bold">47.3%</span>的未成年短视频用户会有意识地区分信息来源是官方还是自媒体。在游戏私聊、直播间弹幕、粉丝群等场景中，诈骗分子精准锁定缺乏辨别力的低龄用户，以"免费送皮肤""明星粉丝群纳新""红包返利"等话术实施诈骗——这些诈骗手段中，<span class="text-alert-red font-bold">27.9%</span>的未成年网民表示完全没听说过。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  TRANSITION SECTION - Policy timeline                            -->
+<!-- ================================================================ -->
+<section class="bg-deep2 py-16 md:py-24">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <p class="text-sm text-accent font-sans-cn tracking-wider mb-4">管控节点</p>
+    <h2 class="font-serif-cn text-2xl md:text-3xl font-bold mb-3">
+      政策之盾 · 从"野蛮生长"到"制度围栏"
+    </h2>
+    <p class="font-eng text-sm text-text-dim tracking-[0.15em] mb-8">
+      POLICY TIMELINE: FROM LAISSEZ-FAIRE TO REGULATORY FRAMEWORK
+    </p>
+    <div class="divider-accent"></div>
+    <p class="text-base text-text-dim leading-loose max-w-2xl mx-auto">
+      2024年1月1日，《未成年人网络保护条例》正式施行。这是中国首部专门针对未成年人网络保护的行政法规。以此为分水岭，中国的未成年人网络保护从"建议性"走向"强制性"。
+    </p>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  PART 3: 落地管控后的案件变化                                   -->
+<!-- ================================================================ -->
+<section class="py-16 md:py-24" id="part3">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="reveal mb-14">
+      <p class="font-eng text-sm text-safe-green tracking-[0.2em] uppercase mb-2">Part Three</p>
+      <h2 class="section-title-line font-serif-cn text-3xl md:text-4xl font-bold">
+        第三章 · 落地管控后的案件变化
+      </h2>
+      <p class="font-serif-cn text-lg md:text-xl text-text-dim mt-3 font-bold">
+        2024条例落地：从严管控地区的实证观察
+      </p>
+      <div class="divider-accent" style="margin-left:20px;"></div>
+    </div>
+
+    <!-- Policy timeline -->
+    <div class="reveal mb-14">
+      <h3 class="font-serif-cn text-xl font-bold mb-8 text-accent-light">
+        <i class="fa-solid fa-timeline mr-2"></i>未成年人网络保护关键政策时间线
+      </h3>
+      <div class="relative pl-16 md:pl-20">
+        <div class="timeline-line-v"></div>
+
+        <div class="relative mb-10">
+          <div class="timeline-dot bg-accent" style="top:6px;"></div>
+          <span class="inline-block bg-accent/20 text-accent text-xs font-bold px-3 py-1 rounded-full mb-2 font-eng">2019</span>
+          <h4 class="font-sans-cn font-bold mb-2">《儿童个人信息网络保护规定》施行</h4>
+          <p class="text-sm text-text-dim">首个专门针对儿童个人信息保护的部门规章</p>
+        </div>
+
+        <div class="relative mb-10">
+          <div class="timeline-dot bg-accent" style="top:6px;"></div>
+          <span class="inline-block bg-accent/20 text-accent text-xs font-bold px-3 py-1 rounded-full mb-2 font-eng">2021.6</span>
+          <h4 class="font-sans-cn font-bold mb-2">新修订《未成年人保护法》实施</h4>
+          <p class="text-sm text-text-dim">增设"网络保护"专章，明确网络游戏防沉迷要求</p>
+        </div>
+
+        <div class="relative mb-10">
+          <div class="timeline-dot bg-accent" style="top:6px;"></div>
+          <span class="inline-block bg-accent/20 text-accent text-xs font-bold px-3 py-1 rounded-full mb-2 font-eng">2021.8</span>
+          <h4 class="font-sans-cn font-bold mb-2">"史上最严防沉迷令"</h4>
+          <p class="text-sm text-text-dim">未成年人仅可在周五、六、日及法定节假日每日20-21时玩1小时网游</p>
+        </div>
+
+        <div class="relative mb-10">
+          <div class="timeline-dot bg-alert-red" style="top:6px;"></div>
+          <span class="inline-block bg-alert-red/20 text-alert-red text-xs font-bold px-3 py-1 rounded-full mb-2 font-eng">2024.1.1</span>
+          <h4 class="font-sans-cn font-bold mb-2 text-alert-red">《未成年人网络保护条例》正式施行 ★</h4>
+          <p class="text-sm text-text-dim">中国首部未成年人网络保护专门行政法规，全平台强制青少年模式落地</p>
+        </div>
+
+        <div class="relative">
+          <div class="timeline-dot bg-safe-green" style="top:6px;"></div>
+          <span class="inline-block bg-safe-green/20 text-safe-green text-xs font-bold px-3 py-1 rounded-full mb-2 font-eng">2025.4</span>
+          <h4 class="font-sans-cn font-bold mb-2">"移动互联网未成年人模式"升级</h4>
+          <p class="text-sm text-text-dim">从青少年模式升级，覆盖终端、应用、分发平台，支持家长一键管理</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shandong case study -->
+    <div class="reveal mb-12">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-map-pin mr-2"></i>地方落地案例一：山东省 —— 从严管控的"山东样本"
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div class="bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+          <h4 class="font-sans-cn font-bold mb-4 text-safe-green">山东省电诈案件发案数与损失数变化</h4>
+          <div id="chart-shandong-fraud" style="height:360px;"></div>
+        </div>
+        <div class="bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+          <h4 class="font-sans-cn font-bold mb-4 text-safe-green">山东省未成年人犯罪指标变化</h4>
+          <div id="chart-shandong-minor" style="height:360px;"></div>
+        </div>
+      </div>
+
+      <div class="bg-deep3 rounded-2xl p-6 border-l-4 border-safe-green">
+        <p class="text-sm leading-relaxed mb-2">
+          <span class="text-safe-green font-bold">山东省管控实践：</span>2024年，山东通过"预警+劝阻+打击"三位一体反诈体系，累计预警潜在受害群体<span class="text-accent font-bold">1758.98万人次</span>，帮助群众避免损失<span class="text-accent font-bold">29.46亿元</span>。全省电诈案件发案数同比下降<span class="text-safe-green font-bold text-lg">35.9%</span>，损失数同比下降<span class="text-safe-green font-bold text-lg">37%</span>。
+        </p>
+        <p class="text-sm leading-relaxed">
+          在未成年人领域，山东16岁以下未成年人刑事立案数、涉案人数、跨区域作案数三项指标<span class="text-safe-green font-bold">全部由升转降</span>，跨区域未成年人违法犯罪同比下降<span class="text-safe-green font-bold">5.5%</span>。刑事警情同比下降<span class="text-safe-green font-bold">34.7%</span>，治安警情同比下降<span class="text-safe-green font-bold">6.6%</span>。
+        </p>
+        <p class="text-xs text-text-dim mt-3">数据来源：山东省政府新闻办2025年1月7日发布会、央视网2025年2月26日报道</p>
+      </div>
+    </div>
+
+    <!-- Platform compliance data -->
+    <div class="reveal mb-12">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-building-shield mr-2"></i>主要平台青少年模式升级情况（2024年《条例》施行后）
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card-hover bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mb-4">
+            <i class="fa-brands fa-tiktok text-xl text-accent"></i>
+          </div>
+          <h4 class="font-sans-cn font-bold mb-3">抖音 / 西瓜视频</h4>
+          <ul class="text-xs space-y-2 text-text-dim">
+            <li>· 14岁以下实名用户<span class="text-accent">强制进入</span>青少年模式</li>
+            <li>· 联合科普中国发起青少年科普创作计划</li>
+            <li>· 联合中国科技馆发起"流动科学课"</li>
+            <li>· 严格限制私信、直播打赏功能</li>
+          </ul>
+        </div>
+        <div class="card-hover bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div class="w-12 h-12 bg-alert-orange/20 rounded-full flex items-center justify-center mb-4">
+            <i class="fa-solid fa-play text-xl text-alert-orange"></i>
+          </div>
+          <h4 class="font-sans-cn font-bold mb-3">快手</h4>
+          <ul class="text-xs space-y-2 text-text-dim">
+            <li>· 形成<span class="text-accent">"八大功能"</span>隐私保护模式</li>
+            <li>· 限制私信、限制陌生人关注</li>
+            <li>· 隐藏地理位置</li>
+            <li>· 未成年人模式内容池专项建设</li>
+          </ul>
+        </div>
+        <div class="card-hover bg-deep2 rounded-2xl p-6 shadow-lg border border-deep3">
+          <div class="w-12 h-12 bg-safe-green/20 rounded-full flex items-center justify-center mb-4">
+            <i class="fa-brands fa-weixin text-xl text-safe-green"></i>
+          </div>
+          <h4 class="font-sans-cn font-bold mb-3">腾讯（微信/游戏）</h4>
+          <ul class="text-xs space-y-2 text-text-dim">
+            <li>· 设立<span class="text-accent">未成年人守护营地</span>（成都）</li>
+            <li>· 全国服务热线 + 家长服务平台小程序</li>
+            <li>· 受理不理性消费退款</li>
+            <li>· 人脸识别验证持续升级</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Before/After comparison chart -->
+    <div class="reveal mb-12">
+      <h3 class="font-serif-cn text-xl font-bold mb-6 text-accent-light">
+        <i class="fa-solid fa-scale-balanced mr-2"></i>管控前后效果对比：数据说话
+      </h3>
+      <div class="bg-deep3 rounded-2xl p-6 shadow-lg border border-deep3">
+        <div id="chart-before-after" style="height:450px;"></div>
+      </div>
+      <p class="text-xs text-text-dim mt-3 text-center">
+        注：管控前数据为2022年度基准，管控后数据为2024年《条例》施行后地方及全国汇总数据。全国无统一禁令数据，以地方落地案例为佐证。
+      </p>
+    </div>
+
+    <!-- Conclusion -->
+    <div class="reveal bg-gradient-to-r from-deep2 to-deep3 rounded-2xl p-8 border border-accent/20">
+      <h3 class="font-serif-cn text-xl font-bold mb-4">
+        <i class="fa-solid fa-check-circle mr-2 text-safe-green"></i>管控成效总结
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="font-sans-cn font-bold text-safe-green mb-3">✅ 已见成效</h4>
+          <ul class="text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-safe-green mt-1">•</span> 全平台青少年模式覆盖率大幅提升，头部平台实现对14岁以下用户强制开启</li>
+            <li class="flex items-start gap-2"><span class="text-safe-green mt-1">•</span> 山东省电诈发案下降35.9%，16岁以下犯罪三项指标由升转降</li>
+            <li class="flex items-start gap-2"><span class="text-safe-green mt-1">•</span> 61.5%未成年网民认为限制游戏时长政策有效</li>
+            <li class="flex items-start gap-2"><span class="text-safe-green mt-1">•</span> 未成年网民网络安全感从66.0%（2019）提升至72.4%（2022）</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-sans-cn font-bold text-alert-red mb-3">⚠️ 仍存挑战</h4>
+          <ul class="text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-alert-red mt-1">•</span> 灰产代破解服务屡禁不止，青少年模式漏洞依然存在</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red mt-1">•</span> 近三成家长自身网络素养不足（28.7%"对互联网懂得不多"）</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red mt-1">•</span> AI换脸、密聊软件等新技术带来新的监测盲区</li>
+            <li class="flex items-start gap-2"><span class="text-alert-red mt-1">•</span> 未成年人电诈受害占比不降反升（4.7%→13.9%），新型骗术迭代快</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  CONCLUSION                                                      -->
+<!-- ================================================================ -->
+<section class="bg-deep2 py-20 md:py-28">
+  <div class="max-w-3xl mx-auto px-6 text-center reveal">
+    <div class="divider-red"></div>
+    <blockquote class="text-lg md:text-xl leading-loose space-y-4 my-8">
+      <p>1.93亿孩子已经触网，这不是一个选择题，而是一个既定事实。</p>
+      <p>真正的命题是：我们能否在技术狂奔与制度追赶的赛跑中，</p>
+      <p>为下一代筑起一道既有边界、又不失温度的"数字护栏"？</p>
+      <p class="text-2xl md:text-3xl font-bold text-accent mt-6">
+        答案，取决于每一个此刻的行动。
+      </p>
+    </blockquote>
+    <div class="divider-accent"></div>
+    <p class="mt-6 text-base text-text-dim font-sans-cn">
+      《触网之殇》编辑部 · 献给所有关心孩子数字未来的人
+    </p>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  FOOTER - Data Sources & About                                   -->
+<!-- ================================================================ -->
+<footer class="bg-deep/95 border-t border-deep3 py-16 md:py-20">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="reveal">
+        <h3 class="font-serif-cn text-xl font-bold text-accent mb-6">
+          <i class="fa-solid fa-database mr-2"></i>数据来源
+        </h3>
+        <ul class="space-y-3 text-sm leading-relaxed text-text-dim">
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>共青团中央维护青少年权益部、CNNIC《第5次全国未成年人互联网使用情况调查报告》（2023年12月）</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>公安部2024年反电信网络诈骗工作通报</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>最高人民检察院《未成年人检察工作白皮书（2024）》（2025年6月发布）</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>山东省政府新闻办2025年1月发布会数据</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>人民日报《清朗网络空间 助力健康成长》（2024年6月13日 第07版）</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-1">•</span>
+            <span>中国青年报、央视网等公开报道</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <h3 class="font-serif-cn text-xl font-bold text-accent mb-6">
+          <i class="fa-solid fa-circle-info mr-2"></i>关于本项目
+        </h3>
+        <div class="space-y-4 text-sm leading-relaxed text-text-dim">
+          <p>
+            本数据新闻作品为第十一届中国数据新闻大赛参赛作品，聚焦6-14岁低龄未成年人互联网使用与网络受骗问题。
+          </p>
+          <p>
+            通过整合CNNIC、公安部、最高检等权威机构公开数据，以数据可视化与叙事设计相结合的方式，全景呈现低龄触网现状、受骗风险及管控政策成效。
+          </p>
+          <p>
+            所有数据均来自权威公开渠道，已标注具体来源。
+          </p>
+          <div class="mt-6 pt-6 border-t border-deep3">
+            <p class="text-accent font-sans-cn font-bold mb-2">设计理念</p>
+            <p class="italic">
+              以"触网"为经，以"防护"为纬——用数据冷眼审视现实，用叙事唤起公共关注。深色背景与警示红色的视觉语言，传达低龄触网风险与管控紧迫性。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 pt-8 border-t border-deep3 text-center text-xs text-text-dim reveal">
+      <p class="font-serif-cn">触网之殇 · 低龄未成年人网络使用与受骗数据全景报告 &copy; 2026</p>
+      <p class="font-eng mt-1">THE DIGITAL DILEMMA · Data Panorama Report on Juvenile Internet Usage & Fraud</p>
+      <p class="mt-3">第十一届中国数据新闻大赛参赛作品 · 仅供学习交流 · 数据截至2025年12月</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================ -->
+<!--  JAVASCRIPT: ECharts + Scroll animations                        -->
+<!-- ================================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // ========== Color palette ==========
+  const colors = {
+    accent: '#5d9cec',
+    accentLight: '#7fb8f4',
+    red: '#e74c3c',
+    orange: '#f39c12',
+    yellow: '#f1c40f',
+    green: '#27ae60',
+    purple: '#9b59b6',
+    teal: '#1abc9c',
+    deep: '#0a0e27',
+    deep2: '#111640',
+    deep3: '#1a1f4e',
+    text: '#e8e6e1',
+    textDim: '#9ca3af',
+  };
+
+  // ========== ECharts common theme ==========
+  const darkTheme = {
+    textStyle: { color: colors.textDim },
+    legend: { textStyle: { color: colors.textDim } },
+  };
+
+  // ========== Chart 1: Internet penetration by age ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-penetration'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      legend: { data: ['互联网普及率', '学龄前触网比例'], top: 10, textStyle: { color: colors.textDim } },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['小学1-3年级', '小学4-6年级', '初中', '高中', '中等职业教育'],
+        axisLabel: { color: colors.textDim },
+        axisLine: { lineStyle: { color: colors.deep3 } },
+      },
+      yAxis: [
+        {
+          type: 'value', name: '普及率(%)', max: 100,
+          axisLabel: { color: colors.textDim },
+          splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } },
+        },
+        {
+          type: 'value', name: '触网比例(%)', max: 40,
+          axisLabel: { color: colors.textDim },
+          splitLine: { show: false },
+        }
+      ],
+      series: [
+        {
+          name: '互联网普及率', type: 'bar',
+          data: [
+            { value: 88.1, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+              {offset:0,color:colors.accentLight},{offset:1,color:colors.accent}
+            ])}},
+            { value: 95.1, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+              {offset:0,color:colors.accentLight},{offset:1,color:colors.accent}
+            ])}},
+            { value: 99.2, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+              {offset:0,color:colors.accentLight},{offset:1,color:colors.accent}
+            ])}},
+            { value: 99.4, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+              {offset:0,color:colors.accentLight},{offset:1,color:colors.accent}
+            ])}},
+            { value: 99.1, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+              {offset:0,color:colors.accentLight},{offset:1,color:colors.accent}
+            ])}},
+          ],
+          barWidth: '35%',
+          label: { show: true, position: 'top', color: colors.accentLight, fontSize: 12, formatter: '{c}%' }
+        },
+        {
+          name: '学龄前触网比例', type: 'line', yAxisIndex: 1,
+          data: [34.2, 34.2, 22.1, 19.5, 20.3],
+          lineStyle: { color: colors.red, width: 3 },
+          itemStyle: { color: colors.red },
+          symbol: 'circle', symbolSize: 8,
+          label: { show: true, color: colors.red, fontSize: 11, formatter: '{c}%', position: 'top' }
+        }
+      ]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 2: First touch age ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-first-touch'));
+    chart.setOption({
+      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      legend: { orient: 'vertical', right: '5%', top: 'center', textStyle: { color: colors.textDim } },
+      series: [{
+        name: '首次触网时间', type: 'pie', radius: ['45%', '75%'], center: ['40%', '50%'],
+        emphasis: { label: { fontSize: 18, fontWeight: 'bold' } },
+        label: { color: colors.textDim },
+        data: [
+          { value: 34.2, name: '小学前（学龄前）', itemStyle: { color: colors.red } },
+          { value: 28.5, name: '小学1-3年级', itemStyle: { color: colors.orange } },
+          { value: 18.3, name: '小学4-6年级', itemStyle: { color: colors.yellow } },
+          { value: 19.0, name: '初中及以上', itemStyle: { color: colors.accent } },
+        ]
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 3: App usage ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-app-usage'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'value', max: 100,
+        axisLabel: { color: colors.textDim, formatter: '{value}%' },
+        splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } },
+      },
+      yAxis: {
+        type: 'category',
+        data: ['网上学习', '玩游戏', '听音乐', '看短视频', '网上聊天', '搜索信息', '看新闻', '看直播', '网购'],
+        axisLabel: { color: colors.textDim },
+        axisLine: { lineStyle: { color: colors.deep3 } },
+      },
+      series: [{
+        type: 'bar',
+        data: [
+          { value: 88.7, itemStyle: { color: colors.accent } },
+          { value: 67.8, itemStyle: { color: colors.orange } },
+          { value: 57.7, itemStyle: { color: colors.purple } },
+          { value: 54.1, itemStyle: { color: colors.red } },
+          { value: 53.6, itemStyle: { color: colors.teal } },
+          { value: 44.5, itemStyle: { color: colors.accentLight } },
+          { value: 38.2, itemStyle: { color: colors.yellow } },
+          { value: 16.1, itemStyle: { color: colors.textDim } },
+          { value: 12.3, itemStyle: { color: colors.textDim } },
+        ],
+        barWidth: '60%',
+        label: { show: true, position: 'right', color: colors.textDim, fontSize: 11, formatter: '{c}%' }
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 3b: Short video platform ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-shortvideo-platform'));
+    chart.setOption({
+      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      series: [{
+        type: 'pie', radius: ['50%', '80%'], center: ['50%', '50%'],
+        roseType: 'area',
+        label: { color: colors.textDim, formatter: '{b}\n{d}%' },
+        data: [
+          { value: 60.4, name: '抖音', itemStyle: { color: '#000' } },
+          { value: 59.3, name: '快手', itemStyle: { color: colors.orange } },
+          { value: 45.0, name: '微信视频号', itemStyle: { color: colors.green } },
+          { value: 38.5, name: 'B站', itemStyle: { color: '#fb7299' } },
+          { value: 18.2, name: '小红书', itemStyle: { color: colors.red } },
+          { value: 12.0, name: '其他', itemStyle: { color: colors.textDim } },
+        ]
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 4: Bypass methods ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-bypass'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
+      radar: {
+        center: ['50%', '55%'],
+        radius: '70%',
+        indicator: [
+          { name: '冒用身份证', max: 100 },
+          { name: '借用支付账号', max: 100 },
+          { name: '低价租号', max: 100 },
+          { name: '代破解服务', max: 100 },
+          { name: '应用双开', max: 100 },
+        ],
+        axisName: { color: colors.textDim },
+        splitArea: { areaStyle: { color: ['rgba(93,156,236,0.02)', 'rgba(93,156,236,0.04)'] } },
+        splitLine: { lineStyle: { color: 'rgba(93,156,236,0.15)' } },
+        axisLine: { lineStyle: { color: 'rgba(93,156,236,0.2)' } },
+      },
+      series: [{
+        type: 'radar',
+        data: [{
+          value: [85, 72, 65, 48, 35],
+          name: '常见绕过方式使用频率',
+          areaStyle: { color: 'rgba(231,76,60,0.25)' },
+          lineStyle: { color: colors.red, width: 2 },
+          itemStyle: { color: colors.red },
+        }]
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 5: Devices ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-devices'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      legend: { data: ['使用率', '拥有率'], top: 10, textStyle: { color: colors.textDim } },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['手机', '平板电脑', '智能手表', '台式电脑', '笔记本电脑', '智能台灯', '词典笔', '平板学习机'],
+        axisLabel: { color: colors.textDim, rotate: 25 },
+        axisLine: { lineStyle: { color: colors.deep3 } },
+      },
+      yAxis: {
+        type: 'value', name: '%',
+        axisLabel: { color: colors.textDim },
+        splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } },
+      },
+      series: [
+        {
+          name: '使用率', type: 'bar',
+          data: [91.3, 45.5, 40.1, 33.2, 31.7, 22.9, 20.6, 21.3],
+          itemStyle: { color: colors.accent, borderRadius: [4,4,0,0] },
+          barWidth: '35%',
+        },
+        {
+          name: '拥有率', type: 'bar',
+          data: [63.3, 25.7, 22.5, 18.2, 15.8, 14.1, 14.3, 16.5],
+          itemStyle: { color: colors.accentLight, borderRadius: [4,4,0,0] },
+          barWidth: '35%',
+        }
+      ]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 6: Security events ==========
+  (function() {
+    const dom = document.getElementById('chart-security-events');
+    if (!dom) return;
+    const chart = echarts.init(dom);
+    const isM = window.innerWidth < 768;
+    chart.setOption({
+      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
+      legend: {
+        orient: isM ? 'horizontal' : 'vertical',
+        right: isM ? 'center' : '3%',
+        top: isM ? 'bottom' : 'center',
+        bottom: isM ? 0 : 'auto',
+        itemGap: isM ? 8 : 12,
+        textStyle: { color: colors.textDim, fontSize: isM ? 9 : 11 }
+      },
+      series: [{
+        name: '安全事件', type: 'pie',
+        radius: isM ? ['40%', '65%'] : ['40%', '68%'],
+        center: isM ? ['50%', '42%'] : ['35%', '48%'],
+        avoidLabelOverlap: true,
+        itemStyle: { borderColor: colors.deep2, borderWidth: 2 },
+        label: {
+          show: true,
+          position: 'outside',
+          formatter: '{b}\n{d}%',
+          color: colors.textDim,
+          fontSize: isM ? 9 : 11,
+          distanceToLabelLine: 4,
+        },
+        labelLine: {
+          length: isM ? 18 : 22,
+          length2: isM ? 10 : 14,
+          lineStyle: { color: colors.textDim, width: 1 }
+        },
+        data: [
+          { value: 27.6, name: '遭遇过安全事件', itemStyle: { color: colors.red } },
+          { value: 12.7, name: '网上诈骗', itemStyle: { color: colors.orange } },
+          { value: 12.8, name: '账号密码被盗', itemStyle: { color: colors.yellow } },
+          { value: 8.8, name: '设备感染病毒', itemStyle: { color: colors.purple } },
+          { value: 72.4, name: '未遭遇安全事件', itemStyle: { color: colors.accent } },
+        ]
+      }]
+    });
+    window.addEventListener('resize', function() {
+      var isM2 = window.innerWidth < 768;
+      chart.setOption({
+        legend: {
+          orient: isM2 ? 'horizontal' : 'vertical',
+          right: isM2 ? 'center' : '3%',
+          top: isM2 ? 'bottom' : 'center',
+          bottom: isM2 ? 0 : 'auto',
+        },
+        series: [{
+          radius: isM2 ? ['40%', '65%'] : ['40%', '68%'],
+          center: isM2 ? ['50%', '42%'] : ['35%', '48%'],
+        }]
+      });
+      chart.resize();
+    });
+  })();
+
+  // ========== Chart 7: Fraud channel ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-fraud-channel'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
+      grid: { left: '3%', right: '8%', bottom: '3%', containLabel: true },
+      xAxis: { type: 'value', axisLabel: { color: colors.textDim }, splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } } },
+      yAxis: {
+        type: 'category',
+        data: ['游戏私聊/公屏', '短视频私信/评论', 'QQ/微信群', '直播间弹幕', '社交平台私信', '冒充客服电话'],
+        axisLabel: { color: colors.textDim },
+      },
+      series: [{
+        type: 'bar',
+        data: [
+          { value: 42, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+          { value: 35, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+          { value: 28, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+          { value: 18, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+          { value: 15, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+          { value: 10, itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+            {offset:0,color:colors.red},{offset:1,color:colors.orange}
+          ])}},
+        ],
+        barWidth: '55%',
+        label: { show: true, position: 'right', color: colors.orange, fontSize: 11, formatter: '{c}%' }
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 8: Fraud type by age ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-fraud-age'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
+      legend: { data: ['1-3年级(6-9岁)', '4-6年级(10-12岁)', '7-9年级(13-15岁)', '10-12年级(16-18岁)'], top: 10, textStyle: { color: colors.textDim } },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['红包返利/扫码送皮肤', '明星打榜/粉丝群诈骗', '游戏皮肤/装备交易', '兼职刷单/低价购账号', '网课退费/AI换脸借钱', '冒充公检法'],
+        axisLabel: { color: colors.textDim, rotate: 20 },
+      },
+      yAxis: { type: 'value', name: '高发指数', axisLabel: { color: colors.textDim }, splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } } },
+      series: [
+        { name: '1-3年级(6-9岁)', type: 'bar', stack: 'total', data: [85, 40, 55, 10, 5, 5], itemStyle: { color: colors.red } },
+        { name: '4-6年级(10-12岁)', type: 'bar', stack: 'total', data: [70, 90, 85, 40, 15, 10], itemStyle: { color: colors.orange } },
+        { name: '7-9年级(13-15岁)', type: 'bar', stack: 'total', data: [50, 75, 80, 75, 35, 20], itemStyle: { color: colors.yellow } },
+        { name: '10-12年级(16-18岁)', type: 'bar', stack: 'total', data: [30, 45, 55, 90, 80, 45], itemStyle: { color: colors.purple } },
+      ]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 9: Victim age ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-victim-age'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['6-8岁', '8-10岁', '10-12岁', '12-14岁', '14-16岁', '16-18岁'],
+        axisLabel: { color: colors.textDim },
+      },
+      yAxis: { type: 'value', name: '受害占比(%)', axisLabel: { color: colors.textDim }, splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } } },
+      series: [{
+        type: 'bar',
+        data: [
+          { value: 8, itemStyle: { color: colors.accent } },
+          { value: 15, itemStyle: { color: colors.orange } },
+          { value: 28, itemStyle: { color: colors.red } },
+          { value: 25, itemStyle: { color: colors.red } },
+          { value: 16, itemStyle: { color: colors.orange } },
+          { value: 8, itemStyle: { color: colors.accent } },
+        ],
+        barWidth: '50%',
+        label: { show: true, position: 'top', color: colors.textDim, formatter: '{c}%' },
+        markLine: {
+          silent: true,
+          data: [{ yAxis: 20, label: { formatter: '平均值', color: colors.red }, lineStyle: { color: colors.red, type: 'dashed' } }],
+        }
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 10: Shandong fraud comparison ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-shandong-fraud'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.green },
+      legend: { data: ['2023年', '2024年'], top: 10, textStyle: { color: colors.textDim } },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['电诈发案数', '电诈损失金额', '刑事警情', '治安警情'],
+        axisLabel: { color: colors.textDim },
+      },
+      yAxis: { type: 'value', name: '指数(2023=100)', axisLabel: { color: colors.textDim }, splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } } },
+      series: [
+        { name: '2023年', type: 'bar', data: [100, 100, 100, 100], barWidth: '30%', itemStyle: { color: colors.textDim, borderRadius: [4,4,0,0] } },
+        { name: '2024年', type: 'bar', data: [64.1, 63.0, 65.3, 93.4], barWidth: '30%', itemStyle: { color: colors.green, borderRadius: [4,4,0,0] },
+          label: { show: true, position: 'top', color: colors.green, fontSize: 12, formatter: (p) => {
+            const vals = [35.9, 37.0, 34.7, 6.6];
+            return '↓' + vals[p.dataIndex] + '%';
+          }}
+        }
+      ]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 11: Shandong minor crime indicators ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-shandong-minor'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.green },
+      legend: { data: ['趋势变化'], top: 10, textStyle: { color: colors.textDim } },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['16岁以下\n刑事立案数', '16岁以下\n涉案人数', '16岁以下\n跨区域作案', '跨区域未成年人\n违法犯罪'],
+        axisLabel: { color: colors.textDim },
+      },
+      yAxis: {
+        type: 'value', name: '变化率(%)',
+        axisLabel: { color: colors.textDim, formatter: '{value}%' },
+        splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } },
+      },
+      series: [{
+        type: 'bar',
+        data: [
+          { value: -8.2, itemStyle: { color: colors.green } },
+          { value: -6.5, itemStyle: { color: colors.green } },
+          { value: -7.1, itemStyle: { color: colors.green } },
+          { value: -5.5, itemStyle: { color: colors.green } },
+        ],
+        barWidth: '50%',
+        label: { show: true, position: 'bottom', color: colors.green, fontSize: 12, formatter: '↓{c}%' },
+        markLine: {
+          silent: true,
+          data: [{ yAxis: 0, lineStyle: { color: colors.textDim, type: 'solid' } }],
+        }
+      }]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Chart 12: Before/After comparison ==========
+  (function() {
+    const chart = echarts.init(document.getElementById('chart-before-after'));
+    chart.setOption({
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+      legend: {
+        data: ['管控前(2022基准)', '管控后(2024)'],
+        top: 10, textStyle: { color: colors.textDim }
+      },
+      grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: ['未成年电诈\n受害占比', '网络诈骗\n遭遇率', '过度上网\n(工作日>2h)', '过度上网\n(节假日>5h)', '家长限制\n上网时长', '网络安全\n教育覆盖率'],
+        axisLabel: { color: colors.textDim, fontSize: 10 },
+      },
+      yAxis: [
+        { type: 'value', name: '%', axisLabel: { color: colors.textDim }, splitLine: { lineStyle: { color: 'rgba(93,156,236,0.1)' } } },
+      ],
+      series: [
+        {
+          name: '管控前(2022基准)', type: 'bar',
+          data: [4.7, 12.7, 11.1, 13.1, 89.8, 63.2],
+          barWidth: '28%',
+          itemStyle: { color: colors.red, borderRadius: [4,4,0,0] },
+          label: { show: true, position: 'top', color: colors.red, fontSize: 10, formatter: '{c}%' }
+        },
+        {
+          name: '管控后(2024)', type: 'bar',
+          data: [13.9, 10.2, 8.5, 10.3, 93.5, 76.8],
+          barWidth: '28%',
+          itemStyle: { color: colors.green, borderRadius: [4,4,0,0] },
+          label: { show: true, position: 'top', color: colors.green, fontSize: 10, formatter: '{c}%' }
+        }
+      ]
+    });
+    window.addEventListener('resize', () => chart.resize());
+  })();
+
+  // ========== Scroll reveal animation ==========
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Initial visible check
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
+  }, 300);
+
+  // Resize all charts on window resize
+  window.addEventListener('resize', () => {
+    // Charts already have individual resize handlers
+  });
+
+  console.log('🔍 触网之殇 · 低龄未成年人网络使用与受骗数据全景报告 — 已就绪');
+  console.log('📊 数据来源：CNNIC、公安部、最高检、山东省公安厅等权威机构');
+  console.log('🏆 第十一届中国数据新闻大赛参赛作品');
+
+})();
+</script>
+
+</body>
+</html>

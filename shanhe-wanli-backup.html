@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="山河万里 · 2025中国文旅数据全景报告 - 国风文旅大数据特别策划">
+  <title>山河万里 · 2025中国文旅数据全景报告</title>
+
+  <!-- ==================== CDN 引入 ==================== -->
+  <!-- Tailwind CSS v3 Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Noto Serif SC (思源宋体) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- ==================== Tailwind 自定义配置 ==================== -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ink':      '#1a1a1a',  // 深墨黑
+            'ink-light':'#2a2a2a',
+            'tea':      '#5D4E37',  // 暗茶棕
+            'tea-light':'#7B6B54',
+            'mountain': '#4A646C',  // 远山青
+            'mountain-light':'#5C7A82',
+            'gold':     '#8B7355',  // 暗金色（强调）
+            'gold-dark':'#6B5B45',
+            'gold-light':'#A08B6B',
+            'red-a':    '#8B3A3A',  // 暗红色（强调）
+            'red-a-dark':'#6B2A2A',
+            'cream':    '#F8F6F2',  // 浅米白（全局背景）
+            'cream-dark':'#EFECE5',
+            'warm-white':'#FDFCFA',
+            'text-body':   '#222222',  // 正文
+            'text-heading':'#111111',  // 大标题
+            'text-muted':  '#666666',  // 辅助小字
+            'text-eng':    '#888888',  // 英文标注
+          },
+          fontFamily: {
+            'serif-cn': ['"Noto Serif SC"', '"Source Han Serif SC"', 'SimSun', 'STSong', 'serif'],
+            'sans-cn':  ['"Microsoft YaHei"', '"PingFang SC"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            'fade-in':    'fadeIn 1s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%':   { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%':   { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- ==================== 全局自定义样式 ==================== -->
+  <style>
+    /* === 平滑滚动 === */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* === 全局基础 === */
+    body {
+      font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', 'STSong', 'Microsoft YaHei', serif;
+      background-color: #F8F6F2;
+      color: #222222;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* === 英文/数字字体 === */
+    .font-eng {
+      font-family: 'Georgia', 'Times New Roman', 'system-ui', '-apple-system', sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    /* === 滚动条美化 === */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F8F6F2; }
+    ::-webkit-scrollbar-thumb { background: #C5BFB0; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A09888; }
+
+    /* === 视口入场动画初始状态 === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 延迟入场变体 */
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* === 图片容器通用样式 === */
+    .img-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .img-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    /* === 卡片hover微交互 === */
+    .card-hover {
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      background-color: #FDFCFA;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    /* === 数据数字样式 === */
+    .data-number {
+      color: #8B7355;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    /* === 分割线 === */
+    .divider-gold {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #8B7355, transparent);
+      margin: 24px auto;
+    }
+    .divider-red {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #8B3A3A, transparent);
+      margin: 24px auto;
+    }
+
+    /* === 地图提示框 === */
+    .map-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(26,26,26,0.95);
+      color: #F8F6F2;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      max-width: 240px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border: 1px solid rgba(139,115,85,0.4);
+    }
+    .map-tooltip.show { opacity: 1; }
+    .map-tooltip .province-name { color: #C9A96E; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .map-tooltip .province-info { color: #CCC; font-size: 12px; }
+
+    /* === 地图省份SVG样式 === */
+    .province-shape {
+      fill: #E8E4DA;
+      stroke: #C5BFB0;
+      stroke-width: 1;
+      transition: fill 0.25s ease, stroke 0.25s ease;
+      cursor: pointer;
+    }
+    .province-shape:hover {
+      fill: #B8A88A;
+      stroke: #8B7355;
+      stroke-width: 1.5;
+    }
+
+    /* === 响应式：移动端适配 === */
+    @media (max-width: 768px) {
+      body { font-size: 15px; line-height: 1.7; }
+      .data-number { font-size: 2.5rem !important; }
+      .hero-title { font-size: 2.5rem !important; }
+      .section-title { font-size: 1.5rem !important; }
+      .divider-gold, .divider-red { margin: 16px auto; width: 40px; }
+    }
+    @media (max-width: 360px) {
+      body { font-size: 14px; }
+      .data-number { font-size: 2rem !important; }
+      .hero-title { font-size: 2rem !important; }
+    }
+
+    /* === 画廊分类标签激活样式 === */
+    .gallery-tag {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery-tag.active {
+      background-color: #8B7355;
+      color: #fff;
+    }
+
+    /* === 时间线竖线 === */
+    .timeline-line {
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #8B7355, #C5BFB0, #8B7355);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 18px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #8B7355;
+      border: 3px solid #F8F6F2;
+      box-shadow: 0 0 0 2px #8B7355;
+    }
+  </style>
+</head>
+
+<body class="bg-cream text-text-body antialiased">
+
+  <!-- ================================================================ -->
+  <!--  模块1：顶部Hero首页Banner区（全屏头部）                         -->
+  <!-- ================================================================ -->
+  <header class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center relative overflow-hidden">
+    <!-- 装饰性背景纹理 -->
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: repeating-linear-gradient(0deg, #1a1a1a 0px, #1a1a1a 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 1px, transparent 1px, transparent 40px);"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto reveal">
+      <!-- 英文小标题 -->
+      <p class="font-eng text-mountain tracking-[0.3em] text-sm md:text-base mb-6 uppercase">
+        Cultural Tourism Big Data Special · 2025
+      </p>
+
+      <!-- 装饰分割线 -->
+      <div class="divider-gold"></div>
+
+      <!-- 主标题 -->
+      <h1 class="hero-title font-serif-cn text-6xl md:text-7xl lg:text-8xl font-black text-text-heading mb-6 tracking-wider">
+        山河万里
+      </h1>
+
+      <!-- 副标题行 -->
+      <p class="text-lg md:text-xl text-text-body font-serif-cn mb-3 tracking-wide">
+        文旅数据报告&ensp;|&ensp;2025 · 文旅大数据特别策划
+      </p>
+
+      <!-- 重复主标题（英文混排） -->
+      <h2 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mt-8 mb-10 tracking-wider">
+        山河万里&ensp;|&ensp;中国文旅数据全景报告
+      </h2>
+
+      <!-- 装饰分割线 -->
+      <div class="divider-gold"></div>
+
+      <!-- 引言长文案 -->
+      <blockquote class="mt-10 mb-8 text-base md:text-lg text-text-body leading-loose tracking-wide space-y-3">
+        <p>"土地不会说话，但每一处遗迹、每一座山川、每一片古村，</p>
+        <p>都在用游客的脚步丈量着一个文明的长度与厚度。"</p>
+      </blockquote>
+
+      <!-- 英文标题 -->
+      <p class="font-eng text-lg md:text-xl text-mountain mt-10 mb-6 tracking-wider">
+        中国文旅 · 数字脉搏
+      </p>
+      <p class="font-eng text-sm md:text-base text-text-muted tracking-[0.2em] uppercase">
+        Digital Pulse of Chinese Cultural Tourism
+      </p>
+
+      <!-- 补充引言 -->
+      <p class="mt-8 text-sm md:text-base text-text-muted leading-relaxed max-w-2xl mx-auto">
+        每一串数字背后，都是无数人的脚步与凝视。它们不是冰冷的统计，而是这片土地上正在发生的文化心跳。
+      </p>
+
+      <!-- 向下滚动提示 -->
+      <div class="mt-16 animate-bounce">
+        <i class="fa-solid fa-chevron-down text-gold text-xl"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================ -->
+  <!--  模块2：核心数据指标卡片区                                      -->
+  <!-- ================================================================ -->
+  <section class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="text-center reveal mb-14">
+      <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Core Data Dashboard</p>
+      <h2 class="section-title font-serif-cn text-3xl md:text-4xl font-bold text-text-heading">文旅核心数据</h2>
+      <div class="divider-gold"></div>
+    </div>
+
+    <!-- 4组数据卡片：PC横向、移动端竖向 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+      <!-- 卡片1：世界遗产 -->
+      <div class="card-hover bg-white rounded-2xl p-8 text-center shadow-sm reveal reveal-delay-1">
+        <p class="data-number text-6xl md:text-7xl font-eng mb-3">59</p>
+        <p class="text-sm text-text-muted font-eng mb-2">项</p>
+        <h3 class="font-serif-cn text-lg font-bold text-text-heading mb-3">世界遗产数量（全球第二）</h3>
+        <p class="text-xs text-text-muted leading-relaxed">文化遗产40项 · 自然遗产15项 · 双遗产4项</p>
+      </div>
+
+      <!-- 卡片2：5A级景区 -->
+      <div class="card-hover bg-white rounded-2xl p-8 text-center shadow-sm reveal reveal-delay-2">
+        <p class="data-number text-6xl md:text-7xl font-eng mb-3">339</p>
+        <p class="text-sm text-text-muted font-eng mb-2">家</p>
+        <h3 class="font-serif-cn text-lg font-bold text-text-heading mb-3">国家5A级旅游景区</h3>
+        <p class="text-xs text-text-muted leading-relaxed">覆盖31个省区市及新疆生产建设兵团</p>
+      </div>
+
+      <!-- 卡片3：非遗 -->
+      <div class="card-hover bg-white rounded-2xl p-8 text-center shadow-sm reveal reveal-delay-3">
+        <p class="data-number text-6xl md:text-7xl font-eng mb-3">1557</p>
+        <p class="text-sm text-text-muted font-eng mb-2">项</p>
+        <h3 class="font-serif-cn text-lg font-bold text-text-heading mb-3">国家级非物质文化遗产</h3>
+        <p class="text-xs text-text-muted leading-relaxed">子项目共计3610个子项</p>
+      </div>
+
+      <!-- 卡片4：博物馆 -->
+      <div class="card-hover bg-white rounded-2xl p-8 text-center shadow-sm reveal reveal-delay-4">
+        <p class="data-number text-6xl md:text-7xl font-eng mb-3">6833</p>
+        <p class="text-sm text-text-muted font-eng mb-2">家</p>
+        <h3 class="font-serif-cn text-lg font-bold text-text-heading mb-3">全国博物馆总数</h3>
+        <p class="text-xs text-text-muted leading-relaxed">2024年全年接待观众超14亿人次</p>
+      </div>
+    </div>
+
+    <!-- 额外综合数据行 -->
+    <div class="mt-8 bg-white rounded-2xl p-8 md:p-10 text-center shadow-sm reveal reveal-delay-5">
+      <p class="data-number text-7xl md:text-8xl font-eng mb-2">49<span class="text-3xl md:text-4xl"> 亿</span></p>
+      <h3 class="font-serif-cn text-xl md:text-2xl font-bold text-text-heading mb-2">2024年国内出游人次</h3>
+      <p class="text-sm text-text-muted">旅游消费超5.7万亿元</p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块3：过渡引言板块 — "我们为什么出发？"                       -->
+  <!-- ================================================================ -->
+  <section class="max-w-4xl mx-auto px-6 py-20 md:py-28">
+    <div class="text-center reveal">
+      <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-8">我们为什么出发？</h2>
+      <div class="divider-red"></div>
+      <blockquote class="text-base md:text-lg text-text-body leading-loose max-w-2xl mx-auto space-y-4">
+        <p>因为每一座山都在那里等了我们亿万年，每一条河都从祖先的血管里流过来。</p>
+        <p>旅游，说到底，是一个文明对自身源头的反复确认。</p>
+      </blockquote>
+      <p class="mt-8 text-sm text-text-muted font-serif-cn">——《山河万里》编辑部</p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块4：市场趋势板块（📈 市场趋势）                             -->
+  <!-- ================================================================ -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="reveal">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Market Trends</p>
+        <h2 class="section-title font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-2">
+          📈 市场趋势
+        </h2>
+        <p class="text-lg md:text-xl text-text-body font-serif-cn font-bold mb-8">
+          文旅市场：从复苏到井喷
+        </p>
+        <div class="divider-gold" style="margin-left:0;"></div>
+      </div>
+
+      <div class="reveal space-y-6 text-base md:text-lg leading-loose text-text-body">
+        <p>
+          2024年，中国国内旅游市场全面复苏，全年出游人次逼近 <span class="text-red-a font-bold text-xl">49亿</span>——相当于每个中国人平均出游3.5次。旅游消费总额突破 <span class="text-red-a font-bold text-xl">5.7万亿元</span>，文旅产业占GDP比重回升至 <span class="text-red-a font-bold text-xl">5.6%</span>。
+        </p>
+        <p>
+          这意味着什么？意味着每一天都有超过 <span class="text-gold font-bold text-xl">1300万人次</span> 在路上。他们中，有退休后第一次坐高铁去远方看海的老人，有带着孩子去博物馆排长队的年轻父母，有在古镇小巷里举着手机直播的返乡青年。
+        </p>
+        <p>
+          值得注意的是，下沉市场成为增长新引擎。三四线城市及县域旅游增速大幅跑赢全国均值，"反向旅游""小众目的地"成为关键词——人们不再只追逐热门，而是开始寻找属于自己的山河。
+        </p>
+      </div>
+
+      <!-- 数据来源标注 -->
+      <p class="text-right text-xs text-text-muted mt-8 reveal">
+        数据来源：文化和旅游部《2024年旅游市场基本情况》
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块5：遗产版图板块（🏛️ 遗产版图）                             -->
+  <!-- ================================================================ -->
+  <section class="bg-cream-dark py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="reveal">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Heritage Landscape</p>
+        <h2 class="section-title font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-2">
+          🏛️ 遗产版图
+        </h2>
+        <p class="text-lg md:text-xl text-text-body font-serif-cn font-bold mb-8">
+          59项世界遗产：一个文明古国的厚度
+        </p>
+        <div class="divider-gold" style="margin-left:0;"></div>
+      </div>
+
+      <div class="reveal space-y-6 text-base md:text-lg leading-loose text-text-body">
+        <p>
+          中国以 <span class="text-red-a font-bold text-xl">59项</span> 世界遗产位列全球第二，仅次于意大利（60项）。其中文化遗产40项、自然遗产15项、文化与自然双遗产4项。
+        </p>
+        <p>
+          从长城到故宫，从敦煌到丽江，从武夷山到三江并流——世界遗产不仅是旅游的金字招牌，更构成了中国文化自信的物理坐标。每一处遗产背后，都是一部微观文明史。
+        </p>
+        <p>
+          你站在莫高窟的壁画前，看到的不仅是飞天的衣袂飘举，更是一个民族对美的一千六百年执着。你走在平遥古城的石板路上，脚下每一块砖都曾听过晋商算盘的声响。这不是旅游，这是穿越时空的对望。
+        </p>
+      </div>
+
+      <p class="text-right text-xs text-text-muted mt-8 reveal">
+        数据来源：UNESCO World Heritage Centre (截至2024年)
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块6：文化消费板块（🔍 文化消费）                             -->
+  <!-- ================================================================ -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="reveal">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Cultural Consumption</p>
+        <h2 class="section-title font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-2">
+          🔍 文化消费
+        </h2>
+        <p class="text-lg md:text-xl text-text-body font-serif-cn font-bold mb-8">
+          博物馆热：一座难求背后的文化觉醒
+        </p>
+        <div class="divider-gold" style="margin-left:0;"></div>
+      </div>
+
+      <div class="reveal space-y-6 text-base md:text-lg leading-loose text-text-body">
+        <p>
+          全国6833家博物馆在2024年接待观众超 <span class="text-red-a font-bold text-xl">14亿</span> 人次，"为一座馆赴一座城"成为新旅行模式。故宫、国博、三星堆、陕历博等头部场馆预约难度堪比春运抢票。
+        </p>
+        <p>但比数字更动人的，是那些在博物馆里发生的故事：</p>
+        <p class="text-text-muted pl-6 border-l-2 border-gold/30">
+          一位父亲蹲在青铜器展柜前，给五岁的女儿讲"这个鼎是古人煮肉用的"；
+        </p>
+        <p class="text-text-muted pl-6 border-l-2 border-gold/30">
+          一个大学生在敦煌壁画数字展厅里，用平板电脑一笔一画地临摹飞天；
+        </p>
+        <p class="text-text-muted pl-6 border-l-2 border-gold/30">
+          一群银发族在老照片展厅里，指着黑白照片说"看，这是我们年轻时的北京"。
+        </p>
+        <p>
+          年轻群体是这场热潮的主力军。<span class="text-gold font-bold">90后、00后</span> 占比超过60%。文创雪糕、考古盲盒、数字藏品——传统文化正在用年轻人听得懂的语言重新叙事。博物馆不再只是收藏过去的地方，它正在成为这个时代文化对话的客厅。
+        </p>
+      </div>
+
+      <!-- 收尾短句 -->
+      <blockquote class="reveal mt-10 text-center text-base md:text-lg text-text-body italic leading-loose">
+        <p>每个人的旅途都是一部个人的文明史。你走过的路、看过的风景、触摸过的砖石——</p>
+        <p>都是你与这片土地之间，无法被任何人夺走的记忆契约。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块7：读者引言过渡板块                                        -->
+  <!-- ================================================================ -->
+  <section class="bg-cream-dark py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-6 text-center reveal">
+      <p class="text-sm text-red-a font-serif-cn tracking-wider mb-4">读者留言 · 来自一位独自走完河西走廊的旅行者</p>
+      <h2 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-3">
+        山河故事 · 人与大地
+      </h2>
+      <p class="font-eng text-sm text-text-muted tracking-[0.15em] mb-8">
+        STORIES OF THE LAND AND ITS PEOPLE
+      </p>
+      <div class="divider-red"></div>
+      <p class="text-base md:text-lg text-text-body leading-loose">
+        数据可以丈量山河的广度，但丈量不了人心的深度。以下三个真实的故事，讲述的是人与土地之间那种无法被量化的深情。
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块8：三大人文故事专栏                                        -->
+  <!-- ================================================================ -->
+  <section class="max-w-4xl mx-auto px-6 py-16 md:py-24 space-y-20">
+    <!-- === 故事1：敦煌·守护 === -->
+    <article class="reveal">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- 图片占位 -->
+        <div class="w-full md:w-2/5 flex-shrink-0">
+          <div class="img-card rounded-2xl overflow-hidden shadow-md bg-gradient-to-br from-amber-100 to-orange-200 aspect-[4/3] flex items-center justify-center">
+            <div class="text-center p-6">
+              <i class="fa-solid fa-paintbrush text-5xl text-gold/60 mb-3"></i>
+              <p class="text-sm text-text-muted">此处替换为敦煌莫高窟实景图</p>
+            </div>
+          </div>
+        </div>
+        <!-- 故事文本 -->
+        <div class="flex-1">
+          <p class="font-eng text-xs text-text-muted tracking-[0.2em] uppercase mb-2">Story 01 · Dunhuang</p>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-1">敦煌 · 守护</h3>
+          <p class="font-serif-cn text-xl text-text-heading mb-4">一个画匠的六十年</p>
+          <p class="font-eng text-sm text-text-muted mb-6">LI DAWEI · DUNHUANG CONSERVATOR</p>
+          <div class="space-y-4 text-base leading-loose text-text-body">
+            <p>李大叔今年七十八了。他十八岁那年第一次走进莫高窟，被壁画上的一抹朱砂红击中，从此再没有离开过敦煌。</p>
+            <p>六十年来，他每天的工作是用最细的毛笔，给褪色的壁画补色。一笔下去，就是三天的沉思。他补过的壁画超过三千平方米，但他的名字从未出现在任何一本旅游指南上。</p>
+            <p class="text-text-muted pl-6 border-l-2 border-gold/30 italic">"有人问我寂寞吗？"他说，"你看那些飞天，跳了一千年的舞，我就在下面看了一千年的观众。她们不寂寞，我就不寂寞。"</p>
+            <p>2024年，莫高窟接待游客超过300万人次。但李大叔说，他最开心的事，是偶尔看到有年轻人站在他修复过的壁画前，久久不肯离去。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- === 故事2：丽江·归来 === -->
+    <article class="reveal">
+      <div class="flex flex-col md:flex-row-reverse gap-8 items-start">
+        <div class="w-full md:w-2/5 flex-shrink-0">
+          <div class="img-card rounded-2xl overflow-hidden shadow-md bg-gradient-to-br from-blue-100 to-cyan-200 aspect-[4/3] flex items-center justify-center">
+            <div class="text-center p-6">
+              <i class="fa-solid fa-house-chimney text-5xl text-mountain/50 mb-3"></i>
+              <p class="text-sm text-text-muted">此处替换为丽江束河古镇实景图</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-eng text-xs text-text-muted tracking-[0.2em] uppercase mb-2">Story 02 · Lijiang</p>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-1">丽江 · 归来</h3>
+          <p class="font-serif-cn text-xl text-text-heading mb-4">从深圳回到束河</p>
+          <p class="font-eng text-sm text-text-muted mb-6">XIAO MEI · RETURN TO THE OLD TOWN</p>
+          <div class="space-y-4 text-base leading-loose text-text-body">
+            <p>小梅在深圳做了七年产品经理，年薪五十万。但三十岁那年，她做了一个让所有同事都看不懂的决定：辞职，回到丽江束河古镇，开了一间只有五个房间的客栈。</p>
+            <p class="text-text-muted pl-6 border-l-2 border-gold/30 italic">"不是因为卷不动了，"她说，"是因为有一年春节回来，发现小时候捉鱼的那条溪被水泥封了，我突然意识到，如果我再不回来，有些东西就真的消失了。"</p>
+            <p>她的客栈从不打广告，但每年旺季都满房。她在院子里种花、腌梅子酒、教客人打手鼓。后来她发现，住客中最多的不是游客，而是从北上广深逃过来的同龄人——他们来这里不是为了看风景，是为了找一个答案。</p>
+            <p class="text-text-muted pl-6 border-l-2 border-gold/30 italic">"其实答案不在丽江，"小梅笑着说，"在每个人出发的路上。"</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- === 故事3：长城·行走 === -->
+    <article class="reveal">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <div class="w-full md:w-2/5 flex-shrink-0">
+          <div class="img-card rounded-2xl overflow-hidden shadow-md bg-gradient-to-br from-stone-200 to-stone-400 aspect-[4/3] flex items-center justify-center">
+            <div class="text-center p-6">
+              <i class="fa-solid fa-mountain-sun text-5xl text-tea/50 mb-3"></i>
+              <p class="text-sm text-text-muted">此处替换为长城实景图</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-eng text-xs text-text-muted tracking-[0.2em] uppercase mb-2">Story 03 · Great Wall</p>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-1">长城 · 行走</h3>
+          <p class="font-serif-cn text-xl text-text-heading mb-4">走完长城的人</p>
+          <p class="font-eng text-sm text-text-muted mb-6">ZHANG LE · THE GREAT WALL TREKKER</p>
+          <div class="space-y-4 text-base leading-loose text-text-body">
+            <p>张乐用了四年时间，从明长城的东端起点——辽宁丹东虎山长城出发，一路走到终点——甘肃嘉峪关。全程8851.8公里，超过了两万五千里长征的里程。</p>
+            <p>他遇见过什么？在山西的野长城段，他被一位放羊的老汉收留了一夜。老汉指着远处坍塌的烽火台说：</p>
+            <p class="text-text-muted pl-6 border-l-2 border-gold/30 italic">"我爷爷的爷爷就在那里放过烽火。现在不用了，但每次我赶羊路过，都要对着它喊一嗓子，怕它太孤单。"</p>
+            <p class="text-text-muted pl-6 border-l-2 border-gold/30 italic">"走到嘉峪关那天，我哭了。"张乐说，"不是因为累，是因为我忽然理解了中国人为什么那么喜欢修长城——不是怕被侵犯，是想给子孙留下一个记号，说'我们曾经在这里认真地活过'。"</p>
+            <p>如今他开了一个公众号，专门记录行走中的故事，粉丝不多，但每一条留言他都认真回复。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块9：守护者 · 文明的传递                                     -->
+  <!-- ================================================================ -->
+  <section class="bg-cream-dark py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal mb-14">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Guardians of Civilization</p>
+        <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-3">
+          守护者 · 文明的传递
+        </h2>
+        <p class="font-eng text-base text-text-muted tracking-[0.1em]">THE GUARDIANS OF CIVILIZATION</p>
+        <div class="divider-gold"></div>
+      </div>
+
+      <!-- 3个子板块 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 子板块1：故宫文物修复师 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-1">
+          <div class="w-14 h-14 bg-cream rounded-full flex items-center justify-center mb-6">
+            <i class="fa-solid fa-scroll text-2xl text-gold"></i>
+          </div>
+          <p class="font-eng text-xs text-text-muted tracking-[0.15em] uppercase mb-3">The Palace Museum</p>
+          <h3 class="font-serif-cn text-xl font-bold text-text-heading mb-3">故宫文物修复师</h3>
+          <p class="font-eng text-xs text-text-muted mb-4">THE PALACE MUSEUM · CONSERVATOR</p>
+          <p class="text-sm text-text-body leading-relaxed mb-5">
+            全国从事文物修复的专业人员不到一万人。在故宫，一位书画修复师要用三个月到半年的时间修复一卷古画。他们管自己叫"文物医生"，但他们治的不是病，是时间在文物上留下的伤。
+          </p>
+          <blockquote class="text-sm text-gold italic border-l-2 border-gold pl-4">
+            "修旧如旧，就是要让后人看到真实的过去，而不是我们想象的过去。"
+          </blockquote>
+        </div>
+
+        <!-- 子板块2：非物质文化传承人 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-2">
+          <div class="w-14 h-14 bg-cream rounded-full flex items-center justify-center mb-6">
+            <i class="fa-solid fa-fire-flame-curved text-2xl text-red-a"></i>
+          </div>
+          <p class="font-eng text-xs text-text-muted tracking-[0.15em] uppercase mb-3">Intangible Heritage</p>
+          <h3 class="font-serif-cn text-xl font-bold text-text-heading mb-3">非物质文化传承人</h3>
+          <p class="font-eng text-xs text-text-muted mb-4">INTANGIBLE HERITAGE · INHERITOR</p>
+          <p class="text-sm text-text-body leading-relaxed mb-5">
+            1557项国家级非物质文化遗产的背后，是超过十万名传承人。他们中许多已经年过古稀，但仍然在教、在唱、在织、在刻、在跳。每一项技艺的失传，都是一个文明器官的坏死。
+          </p>
+          <blockquote class="text-sm text-red-a italic border-l-2 border-red-a pl-4">
+            "我不是在教他们手艺，我是在把火种递到他们手上。灭不灭，看他们了。"
+          </blockquote>
+        </div>
+
+        <!-- 子板块3：乡村文旅带头人 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-3">
+          <div class="w-14 h-14 bg-cream rounded-full flex items-center justify-center mb-6">
+            <i class="fa-solid fa-seedling text-2xl text-mountain"></i>
+          </div>
+          <p class="font-eng text-xs text-text-muted tracking-[0.15em] uppercase mb-3">Rural Tourism</p>
+          <h3 class="font-serif-cn text-xl font-bold text-text-heading mb-3">乡村文旅带头人</h3>
+          <p class="font-eng text-xs text-text-muted mb-4">RURAL TOURISM · PIONEER</p>
+          <p class="text-sm text-text-body leading-relaxed mb-5">
+            全国已有超过两万名"乡村文化和旅游带头人"，他们大多是从大城市回到家乡的年轻人。有的人把废弃的土楼改造成了书店，有的人把侗族大歌唱到了短视频平台上，有的人让千年古村变成了露天博物馆。
+          </p>
+          <blockquote class="text-sm text-mountain italic border-l-2 border-mountain pl-4">
+            "我们不是在开发乡村，我们只是在帮乡村找回它本来的样子。"
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块10：在路上 · 一个时代的旅行叙事（时间线）                 -->
+  <!-- ================================================================ -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center reveal mb-14">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Journey Narrative</p>
+        <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-3">
+          在路上 · 一个时代的旅行叙事
+        </h2>
+        <p class="font-eng text-base text-text-muted tracking-[0.1em]">A GENERATION'S JOURNEY NARRATIVE</p>
+        <div class="divider-gold"></div>
+        <p class="text-base md:text-lg text-text-body leading-loose max-w-2xl mx-auto mt-6">
+          从绿皮火车到高铁，从纸质地图到手机导航——中国人看世界的方式变了，但出发时的那份悸动，从未改变。
+        </p>
+      </div>
+
+      <!-- 四个年代时间线 -->
+      <div class="relative pl-16 md:pl-20">
+        <div class="timeline-line"></div>
+
+        <!-- 1980年代 -->
+        <div class="relative mb-16 reveal">
+          <div class="timeline-dot" style="top:8px;"></div>
+          <span class="inline-block bg-gold text-white text-xs font-bold px-3 py-1 rounded-full mb-3 font-eng">1980's</span>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-3">
+            1980年代 · 绿皮车时代
+          </h3>
+          <p class="text-base text-text-muted italic mb-3">"一辈子可能只出一次远门"</p>
+          <p class="text-base text-text-body leading-loose">
+            绿皮火车是那个年代最浪漫的载体。硬座车厢里挤满了去远方探亲、求学、务工的人——他们带着搪瓷缸、军用水壶和自家烙的饼。一张去北京的硬座票可能要花掉一个月的工资，但车厢里充满的是对未知世界的期待和忐忑。那是中国人开始"移动"的起点。
+          </p>
+        </div>
+
+        <!-- 2000年代 -->
+        <div class="relative mb-16 reveal">
+          <div class="timeline-dot" style="top:8px;"></div>
+          <span class="inline-block bg-red-a text-white text-xs font-bold px-3 py-1 rounded-full mb-3 font-eng">2000's</span>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-3">
+            2000年代 · 黄金周开启
+          </h3>
+          <p class="text-base text-text-muted italic mb-3">"全世界都在学中国话，中国人开始看世界"</p>
+          <p class="text-base text-text-body leading-loose">
+            黄金周制度的推行引爆了大众旅游的浪潮。长城上人山人海，三亚海滩上遮阳伞连成一片。出境游也开始走入寻常百姓家——新马泰成了第一代出国游客的目的地。旅游从"奢侈品"变成了"必需品"，中国人开始用脚步丈量这个星球的广度。
+          </p>
+        </div>
+
+        <!-- 2010年代 -->
+        <div class="relative mb-16 reveal">
+          <div class="timeline-dot" style="top:8px;"></div>
+          <span class="inline-block bg-mountain text-white text-xs font-bold px-3 py-1 rounded-full mb-3 font-eng">2010's</span>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-3">
+            2010年代 · 高铁重塑版图
+          </h3>
+          <p class="text-base text-text-muted italic mb-3">"朝发夕至，中国变小了"</p>
+          <p class="text-base text-text-body leading-loose">
+            四纵四横高铁网络基本成型，将中国的时空距离压缩到了前所未有的程度。北京到上海4小时，广州到深圳30分钟——"高铁圈"取代了"生活圈"。周末跨省游成为可能，曾经需要攒一年假期才能去的远方，现在说走就走。中国真正进入了"同城化"旅游时代。
+          </p>
+        </div>
+
+        <!-- 2020年代 -->
+        <div class="relative reveal">
+          <div class="timeline-dot" style="top:8px;"></div>
+          <span class="inline-block bg-tea text-white text-xs font-bold px-3 py-1 rounded-full mb-3 font-eng">2020's</span>
+          <h3 class="font-serif-cn text-2xl md:text-3xl font-bold text-text-heading mb-3">
+            2020年代 · 旅行的意义被重新定义
+          </h3>
+          <p class="text-base text-text-muted italic mb-3">"不是为了逃离，而是为了重逢"</p>
+          <p class="text-base text-text-body leading-loose">
+            疫情改变了世界，也重塑了中国人对旅行的理解。"反向旅游""微度假""Citywalk""特种兵旅游"——旅行不再是昂贵的炫耀性消费，而成为一种生活方式和精神刚需。人们开始关注路上的体验而非目的地本身，旅行回归到最本质的意义：与自己、与土地、与他人的深度连接。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块11：大地之书 · 景观图鉴（核心图文区）                      -->
+  <!-- ================================================================ -->
+  <section class="bg-cream-dark py-16 md:py-24" id="gallery">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center reveal mb-10">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Gallery of the Land</p>
+        <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-3">
+          大地之书 · 景观图鉴
+        </h2>
+        <p class="font-eng text-base text-text-muted tracking-[0.1em] mb-6">GALLERY OF THE LAND</p>
+        <div class="divider-gold"></div>
+        <p class="text-base md:text-lg text-text-body leading-loose max-w-3xl mx-auto">
+          从世界屋脊到东海之滨，从千年古都到现代都会——每一张图片都是一封写给山河的情书。点击图片，感受中国文旅的万千气象。
+        </p>
+      </div>
+
+      <!-- 分类标签栏 -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10 reveal" id="gallery-tags">
+        <button class="gallery-tag active px-5 py-2 rounded-full bg-gold text-white text-sm font-serif-cn border border-gold" data-category="all">
+          全部
+        </button>
+        <button class="gallery-tag px-5 py-2 rounded-full bg-white text-text-body text-sm font-serif-cn border border-gray-200 hover:border-gold" data-category="history">
+          🏛️ 历史与文明
+        </button>
+        <button class="gallery-tag px-5 py-2 rounded-full bg-white text-text-body text-sm font-serif-cn border border-gray-200 hover:border-gold" data-category="religion">
+          ⛩️ 宗教与建筑
+        </button>
+        <button class="gallery-tag px-5 py-2 rounded-full bg-white text-text-body text-sm font-serif-cn border border-gray-200 hover:border-gold" data-category="nature">
+          🌿 自然奇观
+        </button>
+        <button class="gallery-tag px-5 py-2 rounded-full bg-white text-text-body text-sm font-serif-cn border border-gray-200 hover:border-gold" data-category="town">
+          🏘️ 古镇与人文
+        </button>
+        <button class="gallery-tag px-5 py-2 rounded-full bg-white text-text-body text-sm font-serif-cn border border-gray-200 hover:border-gold" data-category="modern">
+          🌆 现代地标
+        </button>
+      </div>
+
+      <!-- 图鉴卡片网格（JS动态生成） -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gallery-grid">
+        <!-- JS填充 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块12：地域巡礼 · 交互式地图板块                              -->
+  <!-- ================================================================ -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal mb-10">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Regional Tourism</p>
+        <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-3">
+          地域巡礼 · 文旅名片
+        </h2>
+        <p class="font-eng text-base text-text-muted tracking-[0.1em] mb-6">REGIONAL TOURISM HIGHLIGHTS</p>
+        <div class="divider-gold"></div>
+        <p class="text-base md:text-lg text-text-body leading-loose max-w-3xl mx-auto">
+          点击地图，探索不同地区的代表性文旅地标。每一片土地都有自己的呼吸和性格。
+        </p>
+      </div>
+
+      <!-- 子标题 -->
+      <div class="reveal mb-6">
+        <h3 class="font-serif-cn text-xl md:text-2xl font-bold text-text-heading mb-2">
+          📍 地域特色观察
+        </h3>
+        <p class="text-sm text-text-muted">
+          <i class="fa-solid fa-hand-pointer mr-1"></i>
+          悬停省份查看详情 —— 将鼠标悬停在地图上的省份，查看该省文旅特色与代表景观。
+        </p>
+      </div>
+
+      <!-- 中国地图容器 -->
+      <div class="reveal relative bg-cream rounded-2xl p-4 md:p-8 shadow-sm">
+        <svg viewBox="0 0 650 520" class="w-full h-auto max-w-3xl mx-auto" id="china-map">
+          <!-- 地图标题 -->
+          <text x="325" y="510" text-anchor="middle" fill="#999" font-size="11" font-family="serif">
+            中国省级行政区划示意图 · 悬停查看文旅特色
+          </text>
+
+          <!-- 新疆 -->
+          <polygon class="province-shape" data-province="新疆" data-capital="乌鲁木齐" data-highlights="天山天池、喀纳斯湖、吐鲁番葡萄沟、丝绸之路" points="30,20 200,15 240,80 220,170 170,220 150,200 80,190 20,160 15,100"/>
+          <!-- 西藏 -->
+          <polygon class="province-shape" data-province="西藏" data-capital="拉萨" data-highlights="布达拉宫、珠穆朗玛峰、纳木错、雅鲁藏布大峡谷" points="15,160 80,190 150,200 170,220 200,280 180,340 120,360 50,330 10,280 5,220"/>
+          <!-- 青海 -->
+          <polygon class="province-shape" data-province="青海" data-capital="西宁" data-highlights="青海湖、塔尔寺、茶卡盐湖、三江源" points="170,220 220,170 280,190 300,235 290,290 220,290 180,260"/>
+          <!-- 甘肃 -->
+          <polygon class="province-shape" data-province="甘肃" data-capital="兰州" data-highlights="敦煌莫高窟、鸣沙山月牙泉、嘉峪关、麦积山石窟" points="240,80 350,100 370,150 340,210 290,190 280,190 220,170"/>
+          <!-- 内蒙古 -->
+          <polygon class="province-shape" data-province="内蒙古" data-capital="呼和浩特" data-highlights="呼伦贝尔草原、响沙湾、成吉思汗陵、额济纳胡杨林" points="280,15 500,10 520,90 470,130 420,130 370,100 350,100 240,80 220,50"/>
+          <!-- 黑龙江 -->
+          <polygon class="province-shape" data-province="黑龙江" data-capital="哈尔滨" data-highlights="冰雪大世界、镜泊湖、五大连池、漠河北极村" points="500,10 580,15 600,60 590,110 560,130 520,120 500,90 470,130 500,80"/>
+          <!-- 吉林 -->
+          <polygon class="province-shape" data-province="吉林" data-capital="长春" data-highlights="长白山天池、松花湖、伪满皇宫、雾凇岛" points="520,120 600,110 610,140 580,160 540,155 510,140"/>
+          <!-- 辽宁 -->
+          <polygon class="province-shape" data-province="辽宁" data-capital="沈阳" data-highlights="沈阳故宫、大连老虎滩、千山、本溪水洞" points="500,140 560,155 570,185 530,190 500,180 480,160"/>
+          <!-- 北京 -->
+          <polygon class="province-shape" data-province="北京" data-capital="北京" data-highlights="故宫、长城、天坛、颐和园、鸟巢" points="435,140 465,138 470,155 450,165 430,158 425,145"/>
+          <!-- 天津 -->
+          <polygon class="province-shape" data-province="天津" data-capital="天津" data-highlights="天津之眼、五大道、古文化街、盘山" points="440,168 465,165 470,178 448,182 435,175"/>
+          <!-- 河北 -->
+          <polygon class="province-shape" data-province="河北" data-capital="石家庄" data-highlights="避暑山庄、山海关、白洋淀、西柏坡" points="420,130 470,130 470,160 450,175 420,180 400,195 380,175 390,150"/>
+          <!-- 山西 -->
+          <polygon class="province-shape" data-province="山西" data-capital="太原" data-highlights="云冈石窟、平遥古城、五台山、恒山悬空寺" points="370,160 420,180 400,220 370,230 340,220 340,190"/>
+          <!-- 山东 -->
+          <polygon class="province-shape" data-province="山东" data-capital="济南" data-highlights="泰山、曲阜三孔、蓬莱阁、趵突泉" points="440,185 510,185 520,225 480,235 440,230 420,210"/>
+          <!-- 陕西 -->
+          <polygon class="province-shape" data-province="陕西" data-capital="西安" data-highlights="兵马俑、西安城墙、华山、大雁塔" points="340,210 370,220 400,250 390,280 360,280 330,260 310,240"/>
+          <!-- 宁夏 -->
+          <polygon class="province-shape" data-province="宁夏" data-capital="银川" data-highlights="西夏王陵、沙坡头、贺兰山岩画" points="335,195 360,200 355,215 338,215 325,205"/>
+          <!-- 河南 -->
+          <polygon class="province-shape" data-province="河南" data-capital="郑州" data-highlights="少林寺、龙门石窟、殷墟、清明上河园" points="390,240 440,240 450,280 420,290 380,285 370,265"/>
+          <!-- 四川 -->
+          <polygon class="province-shape" data-province="四川" data-capital="成都" data-highlights="九寨沟、都江堰、峨眉山、乐山大佛、三星堆" points="250,260 340,275 360,290 350,330 310,345 260,340 220,310 230,280"/>
+          <!-- 重庆 -->
+          <polygon class="province-shape" data-province="重庆" data-capital="重庆" data-highlights="洪崖洞、大足石刻、武隆天坑、长江三峡" points="335,275 365,280 370,300 350,310 330,300 325,285"/>
+          <!-- 湖北 -->
+          <polygon class="province-shape" data-province="湖北" data-capital="武汉" data-highlights="黄鹤楼、武当山、神农架、三峡大坝" points="380,290 440,290 450,320 420,330 380,325 370,310"/>
+          <!-- 安徽 -->
+          <polygon class="province-shape" data-province="安徽" data-capital="合肥" data-highlights="黄山、宏村西递、九华山、琅琊山" points="430,270 480,270 485,310 455,320 430,315 420,295"/>
+          <!-- 江苏 -->
+          <polygon class="province-shape" data-province="江苏" data-capital="南京" data-highlights="苏州园林、南京中山陵、瘦西湖、太湖" points="450,260 500,260 500,300 480,310 460,305 445,285"/>
+          <!-- 上海 -->
+          <polygon class="province-shape" data-province="上海" data-capital="上海" data-highlights="外滩、迪士尼、豫园、上海中心大厦" points="485,290 510,288 510,305 495,310 482,303"/>
+          <!-- 浙江 -->
+          <polygon class="province-shape" data-province="浙江" data-capital="杭州" data-highlights="西湖、乌镇、普陀山、千岛湖" points="475,310 510,310 515,345 490,355 470,340 465,320"/>
+          <!-- 江西 -->
+          <polygon class="province-shape" data-province="江西" data-capital="南昌" data-highlights="庐山、景德镇、婺源、三清山" points="420,335 475,335 485,370 450,380 420,370 410,350"/>
+          <!-- 湖南 -->
+          <polygon class="province-shape" data-province="湖南" data-capital="长沙" data-highlights="张家界武陵源、岳阳楼、凤凰古城、衡山" points="370,330 430,330 430,375 395,385 365,375 355,355"/>
+          <!-- 福建 -->
+          <polygon class="province-shape" data-province="福建" data-capital="福州" data-highlights="鼓浪屿、武夷山、福建土楼、三坊七巷" points="450,370 495,365 505,400 475,415 445,405 440,385"/>
+          <!-- 贵州 -->
+          <polygon class="province-shape" data-province="贵州" data-capital="贵阳" data-highlights="黄果树瀑布、梵净山、千户苗寨、荔波小七孔" points="310,345 360,340 370,380 340,400 300,390 290,365"/>
+          <!-- 云南 -->
+          <polygon class="province-shape" data-province="云南" data-capital="昆明" data-highlights="丽江古城、元阳梯田、石林、西双版纳" points="220,330 310,345 300,400 260,420 200,410 180,380 200,350"/>
+          <!-- 广西 -->
+          <polygon class="province-shape" data-province="广西" data-capital="南宁" data-highlights="桂林漓江、德天瀑布、北海银滩、龙脊梯田" points="290,385 370,385 375,425 340,440 280,430 270,405"/>
+          <!-- 广东 -->
+          <polygon class="province-shape" data-province="广东" data-capital="广州" data-highlights="广州塔、丹霞山、开平碉楼、长隆" points="375,380 455,380 460,430 420,445 380,435 370,410"/>
+          <!-- 海南 -->
+          <polygon class="province-shape" data-province="海南" data-capital="海口" data-highlights="三亚天涯海角、蜈支洲岛、南山寺、骑楼老街" points="370,445 400,442 405,458 385,465 365,458"/>
+          <!-- 台湾 -->
+          <polygon class="province-shape" data-province="台湾" data-capital="台北" data-highlights="台北故宫、日月潭、阿里山、太鲁阁" points="515,370 540,365 548,400 530,415 510,400"/>
+        </svg>
+
+        <!-- 地图悬浮提示框 -->
+        <div class="map-tooltip" id="map-tooltip">
+          <div class="province-name"></div>
+          <div class="province-info"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块13：文旅趋势 · 关键洞察                                    -->
+  <!-- ================================================================ -->
+  <section class="bg-cream-dark py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center reveal mb-10">
+        <p class="font-eng text-sm text-text-muted tracking-[0.2em] uppercase mb-2">Future Trends</p>
+        <h2 class="font-serif-cn text-3xl md:text-4xl font-bold text-text-heading mb-3">
+          文旅趋势 · 关键洞察
+        </h2>
+        <div class="divider-gold"></div>
+        <p class="text-base md:text-lg text-text-body leading-loose max-w-3xl mx-auto">
+          数据之外，是5个正在重塑中国文旅格局的深层趋势。它们共同指向一个核心命题：旅行的意义正在被重新定义。
+        </p>
+      </div>
+
+      <!-- 二级标题 -->
+      <div class="reveal mb-10">
+        <h3 class="font-serif-cn text-xl md:text-2xl font-bold text-text-heading text-center">
+          🔮 趋势洞察&ensp;|&ensp;新文旅时代的五大特征
+        </h3>
+      </div>
+
+      <!-- 五大趋势卡片 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <!-- 趋势1 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-1">
+          <div class="text-4xl mb-4">🏕️</div>
+          <h4 class="font-serif-cn text-lg font-bold text-text-heading mb-3">深度体验</h4>
+          <p class="text-sm text-text-body leading-relaxed">
+            从"到此一游"到沉浸式文化体验，人们想成为风景的一部分。旅行不再是打卡，而是深度的文化对话与自我探索。
+          </p>
+        </div>
+
+        <!-- 趋势2 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-2">
+          <div class="text-4xl mb-4">📱</div>
+          <h4 class="font-serif-cn text-lg font-bold text-text-heading mb-3">数字赋能</h4>
+          <p class="text-sm text-text-body leading-relaxed">
+            AR/VR导览、数字藏品、云游博物馆——让远方触手可及。科技正在拓展旅行的边界，也为文化遗产保护提供了全新方案。
+          </p>
+        </div>
+
+        <!-- 趋势3 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-3">
+          <div class="text-4xl mb-4">🌿</div>
+          <h4 class="font-serif-cn text-lg font-bold text-text-heading mb-3">生态优先</h4>
+          <p class="text-sm text-text-body leading-relaxed">
+            "绿水青山"成为核心旅游资产，可持续旅行从理念走向行动。生态保护与旅游开发正在寻找新的平衡点。
+          </p>
+        </div>
+
+        <!-- 趋势4 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-2">
+          <div class="text-4xl mb-4">🏘️</div>
+          <h4 class="font-serif-cn text-lg font-bold text-text-heading mb-3">下沉破圈</h4>
+          <p class="text-sm text-text-body leading-relaxed">
+            县域旅游、小众目的地异军突起，最美风景往往在游客最少的地方。中国人的旅行半径正在从"远方"转向"身边"。
+          </p>
+        </div>
+
+        <!-- 趋势5 -->
+        <div class="card-hover bg-white rounded-2xl p-8 shadow-sm reveal reveal-delay-3">
+          <div class="text-4xl mb-4">🎭</div>
+          <h4 class="font-serif-cn text-lg font-bold text-text-heading mb-3">非遗活化</h4>
+          <p class="text-sm text-text-body leading-relaxed">
+            从静态保护到动态传承，非遗不再是博物馆里的标本，而是活着的日常。传统技艺正在以一种前所未有的方式融入现代生活。
+          </p>
+        </div>
+      </div>
+
+      <!-- 关键数据标签行 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
+        <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+          <p class="data-number text-3xl md:text-4xl font-eng mb-1">87.5<span class="text-lg">%</span></p>
+          <p class="text-xs text-text-muted">游客更倾向"文化+自然"复合型目的地</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+          <p class="data-number text-3xl md:text-4xl font-eng mb-1">3.2<span class="text-lg">亿</span></p>
+          <p class="text-xs text-text-muted">2024年红色旅游接待人次</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+          <p class="data-number text-3xl md:text-4xl font-eng mb-1">42<span class="text-lg">%</span></p>
+          <p class="text-xs text-text-muted">文旅消费中"体验类"支出占比</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+          <p class="data-number text-3xl md:text-4xl font-eng mb-1">1.2<span class="text-lg">亿</span></p>
+          <p class="text-xs text-text-muted">非遗主题旅游年接待人次</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块14：结尾寄语板块                                            -->
+  <!-- ================================================================ -->
+  <section class="bg-white py-20 md:py-28">
+    <div class="max-w-3xl mx-auto px-6 text-center reveal">
+      <div class="divider-red"></div>
+      <blockquote class="text-lg md:text-xl text-text-body leading-loose space-y-4 my-8">
+        <p>山河不言，自有春秋。</p>
+        <p>59项遗产是时间写给大地的情书，49亿次出发是人民写给山河的回信。</p>
+        <p>旅行的终点从来不是远方，而是我们重新发现的那个——</p>
+        <p class="text-2xl md:text-3xl font-bold text-text-heading">更好的自己。</p>
+      </blockquote>
+      <div class="divider-gold"></div>
+      <p class="mt-6 text-base text-text-muted font-serif-cn">
+        《山河万里》编辑部 · 献给每一个在路上的你
+      </p>
+
+      <!-- 过渡标语 -->
+      <div class="mt-14 mb-6">
+        <p class="font-serif-cn text-xl md:text-2xl font-bold text-mountain tracking-wider">
+          云海列车，伴君同行
+        </p>
+        <p class="font-eng text-sm text-text-muted tracking-[0.15em] mt-2">
+          TAKE THE TRAIN TO THE MOUNTAINS AND RIVERS
+        </p>
+      </div>
+
+      <!-- 收尾短句 -->
+      <p class="text-sm md:text-base text-text-muted leading-loose max-w-xl mx-auto italic">
+        数据可以量化山河，却无法丈量你站在长城上深吸一口山风的刹那。这趟列车穿行云海，下一站希望是你脚下的土地。
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  模块15：数据来源 & 项目说明 页脚                                -->
+  <!-- ================================================================ -->
+  <footer class="bg-ink text-gray-400 py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- 第一部分：数据来源 -->
+        <div class="reveal">
+          <h3 class="font-serif-cn text-xl font-bold text-cream mb-6">
+            📊 数据来源
+          </h3>
+          <ul class="space-y-3 text-sm leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>文化和旅游部《2024年旅游市场基本情况》</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>UNESCO World Heritage Centre (whc.unesco.org)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>国家统计局年度数据公报</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>中国博物馆协会年度报告</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>中国非物质文化遗产网 (ihchina.cn)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-gold mt-1">•</span>
+              <span>国家文物局公开数据</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 第二部分：关于本项目 -->
+        <div class="reveal">
+          <h3 class="font-serif-cn text-xl font-bold text-cream mb-6">
+            📖 关于本项目
+          </h3>
+          <div class="space-y-4 text-sm leading-relaxed">
+            <p>
+              本数据新闻通过数据可视化与叙事设计，全景呈现中国文化旅游产业的发展现状。
+            </p>
+            <p>
+              所有数据均来自权威公开渠道，故事人物均为化名，但灵感来源于真实的人和事。
+            </p>
+            <p>
+              图片为中国代表性文旅地标实景或概念图。
+            </p>
+            <div class="mt-6 pt-6 border-t border-gray-700">
+              <p class="text-gold-light font-serif-cn font-bold mb-2">设计理念</p>
+              <p class="italic">
+                以"山河"为经，以"人文"为纬，用数据冷眼旁观，用故事温暖讲述。
+              </p>
+              <p>
+                愿每一个读到这里的你，都能在自己的旅途中，找到属于自己的山河万里。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部版权 -->
+      <div class="mt-14 pt-8 border-t border-gray-700 text-center text-xs text-gray-500 reveal">
+        <p class="font-serif-cn">山河万里 · 2025中国文旅数据全景报告 &copy; 2025</p>
+        <p class="font-eng mt-1">THE MOUNTAINS AND RIVERS · Chinese Cultural Tourism Data Panorama Report</p>
+        <p class="mt-3">仅供学习交流使用 · 数据截至2024年12月</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!--  JavaScript：数据定义 + 画廊生成 + 滚动动画 + 地图交互          -->
+  <!-- ================================================================ -->
+  <script>
+  (function() {
+    'use strict';
+
+    // ==================== 1. 文旅地标数据 ====================
+    const landmarks = [
+      { name:'故宫', en:'The Forbidden City', loc:'北京', cat:'history', tag:'🏛️ 历史与文明', slogan:'紫禁城 · 六百年帝王都', year:'始建于1406年', desc:'世界上现存规模最大、保存最为完整的木质结构古建筑群。', img:'bg-gradient-to-br from-red-100 to-amber-100', icon:'fa-crown' },
+      { name:'敦煌莫高窟', en:'Mogao Caves', loc:'甘肃', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'沙漠中的千年画廊', year:'始建于前秦366年', desc:'世界上现存规模最大、内容最丰富的佛教艺术圣地。', img:'bg-gradient-to-br from-yellow-100 to-orange-100', icon:'fa-paintbrush' },
+      { name:'秦始皇兵马俑', en:'Terracotta Warriors', loc:'陕西西安', cat:'history', tag:'🏛️ 历史与文明', slogan:'世界第八大奇迹', year:'始建于公元前246年', desc:'八千余尊陶俑陶马，沉睡两千年的大秦军阵。', img:'bg-gradient-to-br from-stone-200 to-amber-100', icon:'fa-chess-rook' },
+      { name:'天坛', en:'Temple of Heaven', loc:'北京', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'祭天祈谷 · 人与天的对话', year:'始建于1420年', desc:'中国现存最大的古代祭祀性建筑群。', img:'bg-gradient-to-br from-blue-100 to-cyan-100', icon:'fa-place-of-worship' },
+      { name:'苏州园林', en:'Suzhou Classical Gardens', loc:'江苏', cat:'town', tag:'🏘️ 古镇与人文', slogan:'咫尺之内再造乾坤', year:'始于春秋时期', desc:'中国园林艺术的最高成就，世界文化遗产。', img:'bg-gradient-to-br from-green-100 to-emerald-100', icon:'fa-tree' },
+      { name:'三星堆', en:'Sanxingdui', loc:'四川广汉', cat:'history', tag:'🏛️ 历史与文明', slogan:'古蜀文明的惊世密码', year:'约公元前1600年', desc:'出土青铜神树、青铜大立人等惊世文物。', img:'bg-gradient-to-br from-amber-100 to-yellow-200', icon:'fa-mask' },
+      { name:'颐和园', en:'Summer Palace', loc:'北京', cat:'history', tag:'🏛️ 历史与文明', slogan:'皇家园林博物馆', year:'始建于1750年', desc:'中国现存最大的皇家园林，万寿山昆明湖。', img:'bg-gradient-to-br from-teal-100 to-green-100', icon:'fa-umbrella-beach' },
+      { name:'西安城墙', en:'Xi\'an City Wall', loc:'陕西', cat:'history', tag:'🏛️ 历史与文明', slogan:'中国现存最完整的古代城垣', year:'始建于1370年', desc:'全长13.74公里，可骑行一圈穿越千年。', img:'bg-gradient-to-br from-stone-200 to-red-100', icon:'fa-fort-awesome' },
+      { name:'布达拉宫', en:'Potala Palace', loc:'西藏拉萨', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'世界屋脊上的圣殿', year:'始建于公元7世纪', desc:'藏传佛教圣地，西藏最宏伟的建筑群。', img:'bg-gradient-to-br from-purple-100 to-pink-100', icon:'fa-mountain' },
+      { name:'乐山大佛', en:'Leshan Giant Buddha', loc:'四川', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'山是一尊佛，佛是一座山', year:'开凿于713年', desc:'世界最大的石刻弥勒佛坐像，通高71米。', img:'bg-gradient-to-br from-green-100 to-stone-100', icon:'fa-buddha' },
+      { name:'恒山悬空寺', en:'Hanging Temple', loc:'山西', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'挂在悬崖上的千年古刹', year:'始建于491年', desc:'佛道儒三教合一的独特寺庙，悬于绝壁之上。', img:'bg-gradient-to-br from-stone-100 to-gray-200', icon:'fa-building-columns' },
+      { name:'武当山', en:'Wudang Mountains', loc:'湖北十堰', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'亘古无双胜境 · 天下第一仙山', year:'建筑始于唐代', desc:'道教圣地，武当武术发源地。', img:'bg-gradient-to-br from-indigo-100 to-blue-100', icon:'fa-wand-sparkles' },
+      { name:'五台山寺庙群', en:'Mount Wutai Temples', loc:'山西忻州', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'文殊菩萨道场 · 清凉世界', year:'始建于东汉', desc:'中国四大佛教名山之首，现存寺庙47座。', img:'bg-gradient-to-br from-slate-100 to-blue-100', icon:'fa-torii-gate' },
+      { name:'塔尔寺', en:'Ta\'er Monastery', loc:'青海西宁', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'宗喀巴大师诞生地', year:'始建于1379年', desc:'藏传佛教格鲁派六大寺院之一。', img:'bg-gradient-to-br from-amber-100 to-yellow-100', icon:'fa-gopuram' },
+      { name:'大昭寺', en:'Jokhang Temple', loc:'西藏拉萨', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'拉萨的心脏 · 信仰的中心', year:'始建于公元7世纪', desc:'藏传佛教最神圣的寺庙，供奉释迦牟尼12岁等身像。', img:'bg-gradient-to-br from-red-100 to-amber-100', icon:'fa-hands-praying' },
+      { name:'拉卜楞寺', en:'Labrang Monastery', loc:'甘肃甘南', cat:'religion', tag:'⛩️ 宗教与建筑', slogan:'世界藏学府', year:'始建于1709年', desc:'藏传佛教格鲁派六大宗主寺之一。', img:'bg-gradient-to-br from-yellow-100 to-orange-100', icon:'fa-book-atlas' },
+      { name:'长江三峡', en:'Three Gorges', loc:'渝鄂', cat:'nature', tag:'🌿 自然奇观', slogan:'千里江陵一日还', year:'—', desc:'中国最壮丽的峡谷景观，瞿塘夔门天下雄。', img:'bg-gradient-to-br from-blue-200 to-cyan-100', icon:'fa-water' },
+      { name:'武陵源', en:'Wulingyuan', loc:'湖南张家界', cat:'nature', tag:'🌿 自然奇观', slogan:'潘多拉星球的原型', year:'—', desc:'三千奇峰拔地而起，阿凡达取景灵感来源。', img:'bg-gradient-to-br from-emerald-100 to-green-200', icon:'fa-leaf' },
+      { name:'鸣沙山月牙泉', en:'Crescent Lake', loc:'甘肃敦煌', cat:'nature', tag:'🌿 自然奇观', slogan:'沙漠中的月亮', year:'—', desc:'沙不填泉、泉不涸竭的沙漠奇观。', img:'bg-gradient-to-br from-yellow-200 to-orange-100', icon:'fa-moon' },
+      { name:'黄果树瀑布', en:'Huangguoshu Waterfall', loc:'贵州安顺', cat:'nature', tag:'🌿 自然奇观', slogan:'亚洲第一大瀑布', year:'—', desc:'主瀑高77.8米宽101米，水帘洞穿瀑而过。', img:'bg-gradient-to-br from-cyan-100 to-blue-200', icon:'fa-droplet' },
+      { name:'长白山天池', en:'Heavenly Lake', loc:'吉林', cat:'nature', tag:'🌿 自然奇观', slogan:'火山口上的天空之镜', year:'—', desc:'中国最深的火山口湖，冬季冰封如仙境。', img:'bg-gradient-to-br from-blue-100 to-indigo-200', icon:'fa-snowflake' },
+      { name:'雅鲁藏布大峡谷', en:'Yarlung Tsangpo Canyon', loc:'西藏', cat:'nature', tag:'🌿 自然奇观', slogan:'地球上最深的峡谷', year:'—', desc:'全长504.6公里，最深6009米。', img:'bg-gradient-to-br from-teal-100 to-green-200', icon:'fa-mountain-sun' },
+      { name:'元阳梯田', en:'Yuanyang Rice Terraces', loc:'云南', cat:'nature', tag:'🌿 自然奇观', slogan:'大地的等高线', year:'—', desc:'哈尼族人1300年雕琢的大地艺术。', img:'bg-gradient-to-br from-lime-100 to-green-100', icon:'fa-layer-group' },
+      { name:'梵净山', en:'Fanjing Mountain', loc:'贵州', cat:'nature', tag:'🌿 自然奇观', slogan:'云海之上的天空之城', year:'—', desc:'世界自然遗产，红云金顶矗立云海之上。', img:'bg-gradient-to-br from-purple-100 to-pink-200', icon:'fa-cloud-moon' },
+      { name:'丽江古城', en:'Old Town of Lijiang', loc:'云南', cat:'town', tag:'🏘️ 古镇与人文', slogan:'被时光遗忘的柔软角落', year:'始建于宋末元初', desc:'纳西族文化古城，小桥流水人家。', img:'bg-gradient-to-br from-rose-100 to-orange-100', icon:'fa-bridge-water' },
+      { name:'平遥古城', en:'Pingyao Ancient City', loc:'山西', cat:'town', tag:'🏘️ 古镇与人文', slogan:'中国保存最完整的古代县城', year:'始建于西周', desc:'晋商故里，完整保留了明清时期县城风貌。', img:'bg-gradient-to-br from-stone-200 to-amber-100', icon:'fa-landmark' },
+      { name:'福建土楼', en:'Fujian Tulou', loc:'福建', cat:'town', tag:'🏘️ 古镇与人文', slogan:'客家民居的东方城堡', year:'始于宋元时期', desc:'世界独一无二的山村民居建筑。', img:'bg-gradient-to-br from-yellow-100 to-amber-100', icon:'fa-circle' },
+      { name:'皖南古村落', en:'Ancient Villages in Southern Anhui', loc:'安徽', cat:'town', tag:'🏘️ 古镇与人文', slogan:'中国画里的乡村', year:'—', desc:'宏村、西递为代表，白墙黛瓦马头墙。', img:'bg-gradient-to-br from-gray-100 to-slate-200', icon:'fa-house' },
+      { name:'都江堰', en:'Dujiangyan', loc:'四川', cat:'history', tag:'🏛️ 历史与文明', slogan:'两千年的水利奇迹', year:'始建于公元前256年', desc:'世界上年代最久远且仍在使用的无坝引水工程。', img:'bg-gradient-to-br from-blue-100 to-cyan-100', icon:'fa-water' },
+      { name:'岳阳楼', en:'Yueyang Tower', loc:'湖南', cat:'history', tag:'🏛️ 历史与文明', slogan:'洞庭天下水 · 岳阳天下楼', year:'始建于东汉', desc:'三大名楼之一，范仲淹《岳阳楼记》诞生地。', img:'bg-gradient-to-br from-teal-100 to-cyan-100', icon:'fa-building' },
+      { name:'黄鹤楼', en:'Yellow Crane Tower', loc:'湖北武汉', cat:'history', tag:'🏛️ 历史与文明', slogan:'天下江山第一楼', year:'始建于223年', desc:'崔颢李白皆登临，长江之滨的文化地标。', img:'bg-gradient-to-br from-amber-100 to-yellow-100', icon:'fa-feather' },
+      { name:'鼓浪屿', en:'Kulangsu', loc:'福建厦门', cat:'town', tag:'🏘️ 古镇与人文', slogan:'钢琴之岛 · 万国建筑博览', year:'—', desc:'世界文化遗产，中西文化交融的海上花园。', img:'bg-gradient-to-br from-cyan-100 to-blue-100', icon:'fa-music' },
+      { name:'广州塔', en:'Canton Tower', loc:'广东', cat:'modern', tag:'🌆 现代地标', slogan:'小蛮腰 · 羊城新高度', year:'建成于2010年', desc:'高600米，中国第一高塔。', img:'bg-gradient-to-br from-purple-100 to-pink-200', icon:'fa-tower-cell' },
+      { name:'上海外滩', en:'The Bund', loc:'上海', cat:'modern', tag:'🌆 现代地标', slogan:'万国建筑博览群', year:'—', desc:'黄浦江畔，陆家嘴天际线的最佳观赏点。', img:'bg-gradient-to-br from-slate-200 to-blue-100', icon:'fa-city' },
+      { name:'港珠澳大桥', en:'Hong Kong-Zhuhai-Macao Bridge', loc:'粤港澳', cat:'modern', tag:'🌆 现代地标', slogan:'海上巨龙 · 世界最长跨海大桥', year:'建成于2018年', desc:'全长55公里，世界桥梁史上的巅峰之作。', img:'bg-gradient-to-br from-blue-200 to-indigo-100', icon:'fa-bridge' },
+      { name:'北京鸟巢', en:'Bird\'s Nest', loc:'北京', cat:'modern', tag:'🌆 现代地标', slogan:'2008奥运记忆', year:'建成于2008年', desc:'国家体育场，世界上最复杂的钢结构建筑之一。', img:'bg-gradient-to-br from-red-100 to-orange-100', icon:'fa-medal' },
+      { name:'上海中心大厦', en:'Shanghai Tower', loc:'上海', cat:'modern', tag:'🌆 现代地标', slogan:'中国第一高楼 · 632米', year:'建成于2015年', desc:'螺旋上升的外观设计，代表中国建筑的现代高度。', img:'bg-gradient-to-br from-gray-100 to-slate-200', icon:'fa-building-circle-arrow-up' },
+      { name:'北京大兴机场', en:'Beijing Daxing International Airport', loc:'北京', cat:'modern', tag:'🌆 现代地标', slogan:'凤凰展翅 · 新国门', year:'建成于2019年', desc:'扎哈·哈迪德设计，世界最大单体航站楼。', img:'bg-gradient-to-br from-amber-100 to-orange-100', icon:'fa-plane-departure' },
+      { name:'重庆人民大礼堂', en:'Chongqing Great Hall', loc:'重庆', cat:'modern', tag:'🌆 现代地标', slogan:'山城的文化殿堂', year:'建成于1954年', desc:'仿明清宫殿建筑，重庆的标志性文化地标。', img:'bg-gradient-to-br from-green-100 to-teal-100', icon:'fa-building-columns' },
+      { name:'北京央视大楼', en:'CCTV Headquarters', loc:'北京', cat:'modern', tag:'🌆 现代地标', slogan:'大裤衩 · 建筑奇观', year:'建成于2012年', desc:'雷姆·库哈斯设计，挑战重力的建筑奇迹。', img:'bg-gradient-to-br from-blue-100 to-slate-100', icon:'fa-tv' },
+    ];
+
+    // ==================== 2. 生成图鉴卡片 ====================
+    const galleryGrid = document.getElementById('gallery-grid');
+    const galleryTags = document.getElementById('gallery-tags');
+    let activeCategory = 'all';
+
+    function renderGallery(category) {
+      const filtered = category === 'all'
+        ? landmarks
+        : landmarks.filter(l => l.cat === category);
+
+      galleryGrid.innerHTML = filtered.map((lm, i) => `
+        <div class="img-card bg-white rounded-2xl overflow-hidden shadow-sm card-hover reveal" style="animation-delay:${i * 0.05}s">
+          <!-- 图片容器 -->
+          <div class="${lm.img} aspect-[4/3] flex items-center justify-center relative overflow-hidden">
+            <div class="text-center p-6">
+              <i class="fa-solid ${lm.icon} text-5xl opacity-30 mb-2"></i>
+              <p class="text-xs text-text-muted mt-2">此处替换为<br>${lm.name}实景图</p>
+            </div>
+            <!-- 分类标签角标 -->
+            <span class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm text-xs px-2 py-1 rounded-full text-text-muted">${lm.tag}</span>
+          </div>
+          <!-- 文字信息 -->
+          <div class="p-5">
+            <div class="flex items-baseline justify-between mb-1">
+              <h4 class="font-serif-cn text-lg font-bold text-text-heading">${lm.name}</h4>
+              <span class="text-xs text-text-muted">${lm.loc}</span>
+            </div>
+            <p class="font-eng text-xs text-text-eng mb-2">${lm.en}</p>
+            <p class="text-sm text-gold font-serif-cn font-bold mb-1">${lm.slogan}</p>
+            <p class="text-xs text-text-muted mb-2 font-eng">${lm.year}</p>
+            <p class="text-xs text-text-body leading-relaxed">${lm.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // 重新触发reveal动画
+      setTimeout(() => {
+        document.querySelectorAll('#gallery-grid .reveal').forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight) {
+            el.classList.add('visible');
+          }
+        });
+      }, 100);
+    }
+
+    // 初始渲染
+    renderGallery('all');
+
+    // 分类标签点击事件
+    galleryTags.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      // 更新标签激活状态
+      galleryTags.querySelectorAll('button').forEach(b => {
+        b.classList.remove('active', 'bg-gold', 'text-white', 'border-gold');
+        b.classList.add('bg-white', 'text-text-body', 'border-gray-200');
+      });
+      btn.classList.add('active', 'bg-gold', 'text-white', 'border-gold');
+      btn.classList.remove('bg-white', 'text-text-body', 'border-gray-200');
+
+      // 筛选渲染
+      activeCategory = btn.dataset.category;
+      renderGallery(activeCategory);
+    });
+
+    // ==================== 3. 滚动入场动画（Intersection Observer） ====================
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // 观察所有 .reveal 元素
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 动态观察新增元素（画廊切换后）
+    const mutationObserver = new MutationObserver(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        if (!el.dataset.observed) {
+          el.dataset.observed = '1';
+          observer.observe(el);
+        }
+      });
+    });
+    mutationObserver.observe(galleryGrid, { childList: true, subtree: true });
+
+    // ==================== 4. 地图省份悬浮交互 ====================
+    const mapSvg = document.getElementById('china-map');
+    const tooltip = document.getElementById('map-tooltip');
+    const tooltipName = tooltip.querySelector('.province-name');
+    const tooltipInfo = tooltip.querySelector('.province-info');
+
+    if (mapSvg && tooltip) {
+      const provinces = mapSvg.querySelectorAll('.province-shape');
+
+      provinces.forEach(shape => {
+        shape.addEventListener('mouseenter', (e) => {
+          const province = shape.dataset.province;
+          const capital = shape.dataset.capital;
+          const highlights = shape.dataset.highlights;
+          tooltipName.textContent = `${province} · ${capital}`;
+          tooltipInfo.textContent = `🏞️ ${highlights}`;
+          tooltip.classList.add('show');
+        });
+
+        shape.addEventListener('mousemove', (e) => {
+          // 让提示框跟随鼠标，并做边界检测
+          let x = e.clientX + 16;
+          let y = e.clientY + 16;
+          const tw = tooltip.offsetWidth;
+          const th = tooltip.offsetHeight;
+          if (x + tw > window.innerWidth - 10) x = e.clientX - tw - 16;
+          if (y + th > window.innerHeight - 10) y = e.clientY - th - 16;
+          tooltip.style.left = x + 'px';
+          tooltip.style.top = y + 'px';
+        });
+
+        shape.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('show');
+        });
+      });
+    }
+
+    // ==================== 5. 页面加载完成后的初始化 ====================
+    // 触发首屏可见元素的动画
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.classList.add('visible');
+        }
+      });
+    }, 200);
+
+    console.log('🏔️ 山河万里 · 2025中国文旅数据全景报告 — 已就绪');
+    console.log('📊 数据来源：文化和旅游部、UNESCO、国家统计局等权威机构');
+    console.log('📖 共收录 ' + landmarks.length + ' 处文旅地标');
+
+  })();
+  </script>
+
+</body>
+</html>

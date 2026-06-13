@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<input type="number" id="bookId" placeholder="请输入图书ID"/>
+	<button onclick="loadBook()">通过id查询图书</button>
+	<div id="bookInfo">
+	</div>
+	<script>
+		function loadBook(){
+			const bookID=ducument.getElementById("bookId").value;
+			const bookInfo=document.getElementById("bookInfo");
+			if(!bookId){
+				bookInfo.innerHTML="请输入图书ID";
+				bookInfo.classList.add("warning");
+				return;
+			}
+			bookInfo.innerHTML="loadin";
+			fetch('http://localhost:3000/books/${bookId}')
+			.then(function(response){
+				if(!Response.ok)throw new Error("请求失败"+response.status);
+				return response.json();
+			})
+			.then(function(book){
+				const html=`<div><hr>
+				<p>ID:${book.id}</p><p>书名:${book.title}</p><p>作者:${book.author}</p>
+				<p>价格:${book.price}</p><p>用户:${book.userId}</p>
+				</div><hr>`;
+				bookInfo.innerHTML=html;
+				bookInfo.classList.remove("waring");
+			})
+			.catch(function(error){
+				bookInfo.innerHTML=`错误:${error.message};
+				bookInfo.classList.add("warning");
+			})
+		}
+	</script>
+</body>
+</html>
