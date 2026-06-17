@@ -71,12 +71,23 @@ body {
   transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,145,58,.4);
 }
 
+/* 汉堡菜单按钮（默认隐藏） */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  z-index: 101; padding: 8px;
+}
+.hamburger span {
+  display: block; width: 26px; height: 3px; background: #e8c97a;
+  border-radius: 2px; transition: all .3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
 /* ===========================
    一级布局元素2: 双飞翼布局
-   二级: 左侧竖图 | 中间主体 | 右侧竖图
    =========================== */
 .wrapper { display: flex; max-width: 1440px; margin: 0 auto; }
-/* 二级1 & 二级3: 两侧竖图 */
 .wing {
   width: 110px; flex-shrink: 0; position: sticky; top: 64px;
   height: calc(100vh - 64px); overflow: hidden; z-index: 1;
@@ -94,19 +105,16 @@ body {
   font-weight: bold; text-shadow: 0 0 20px rgba(0,0,0,.8), 0 0 4px rgba(200,145,58,.6);
   background: rgba(0,0,0,.2); padding: 24px 10px; border-radius: 4px;
 }
-/* 二级2: 中间主体 */
 .main { flex: 1; min-width: 0; padding: 24px 36px 12px; }
 
 /* ===========================
    一级布局元素3: 轮播图
-   二级: 轮播容器 | 箭头 | 指示点
    =========================== */
 .carousel {
   position: relative; width: 100%; height: 440px; overflow: hidden;
   border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.2); margin-bottom: 36px;
   border: 1px solid rgba(200,145,58,.12);
 }
-/* 二级1: 轮播滑动容器 */
 .carousel .slides { display: flex; width: 500%; height: 100%; transition: transform .7s cubic-bezier(.4,0,.2,1); }
 .carousel .slide { width: 20%; height: 100%; position: relative; flex-shrink: 0; }
 .carousel .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -125,7 +133,6 @@ body {
   display: block; font-size: 14px; font-weight: 400; letter-spacing: 2px;
   opacity: .85; margin-top: 4px;
 }
-/* 二级2: 左右箭头 */
 .carousel .arrow {
   position: absolute; top: 50%; transform: translateY(-50%);
   width: 48px; height: 48px; border-radius: 50%;
@@ -137,7 +144,6 @@ body {
 .carousel .arrow:hover { background: rgba(200,145,58,.5); border-color: rgba(200,145,58,.6); transform: translateY(-50%) scale(1.1); }
 .carousel .arrow.prev { left: 20px; }
 .carousel .arrow.next { right: 20px; }
-/* 二级3: 底部指示点 */
 .carousel .dots {
   position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
   display: flex; gap: 10px; z-index: 5;
@@ -153,10 +159,8 @@ body {
 
 /* ===========================
    一级布局元素4: 景点卡片区
-   二级: 区域标题 | 卡片网格 | 卡片项
    =========================== */
 .gallery { margin-bottom: 12px; }
-/* 二级1: 区域标题 */
 .gallery .section-title {
   font-size: 24px; color: #3d1c00; margin-bottom: 20px; padding-left: 16px;
   border-left: 5px solid #c8913a; letter-spacing: 4px; font-weight: bold;
@@ -166,9 +170,7 @@ body {
   content: ""; flex: 1; height: 1px;
   background: linear-gradient(90deg, rgba(200,145,58,.4), transparent);
 }
-/* 二级2: 卡片网格 */
 .gallery .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-/* 二级3: 卡片项 */
 .gallery .card {
   border-radius: 12px; overflow: hidden; cursor: pointer; position: relative;
   box-shadow: 0 4px 16px rgba(0,0,0,.1); transition: all .4s cubic-bezier(.4,0,.2,1);
@@ -196,7 +198,6 @@ body {
 
 /* ===========================
    一级布局元素5: 页脚
-   二级: 关于安阳 | 快速链接 | 版权信息
    =========================== */
 .footer {
   background: linear-gradient(180deg, #1f0e05 0%, #140600 100%);
@@ -205,7 +206,6 @@ body {
 }
 .footer .footer-inner { max-width: 1440px; margin: 0 auto; padding: 0 150px; }
 .footer .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 36px; }
-/* 二级1: 关于安阳 */
 .footer .footer-about h3 {
   font-size: 20px; color: #e8c97a; margin-bottom: 14px; letter-spacing: 3px;
   position: relative; padding-bottom: 10px;
@@ -215,7 +215,6 @@ body {
   width: 40px; height: 2px; background: rgba(200,145,58,.5); border-radius: 1px;
 }
 .footer .footer-about p { font-size: 14px; line-height: 2; color: #a09080; }
-/* 二级2: 快速链接 & 联系方式 */
 .footer .footer-links h3 {
   font-size: 18px; color: #e8c97a; margin-bottom: 14px; letter-spacing: 2px;
   position: relative; padding-bottom: 10px;
@@ -231,7 +230,6 @@ body {
   transition: all .3s; padding-left: 0;
 }
 .footer .footer-links a:hover { color: #e8c97a; padding-left: 6px; }
-/* 二级3: 版权信息 */
 .footer .footer-copyright {
   text-align: center; padding: 18px 0; font-size: 13px; color: #706050;
   border-top: 1px solid rgba(255,255,255,.06);
@@ -272,24 +270,136 @@ body {
   75% { transform: translateY(-6px) rotate(-.3deg); }
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============================================================
+   📱  移动端 & 平板适配 (Media Queries)
+   ============================================================ */
+
+/* ---- 平板 (≤1024px) ---- */
+@media (max-width: 1024px) {
+  .navbar { padding: 0 24px; }
+  .navbar .nav-links { gap: 18px; }
+  .navbar .nav-links a { font-size: 13px; letter-spacing: 1px; }
+  .navbar .logo .icon { width: 34px; height: 34px; font-size: 18px; }
+  .navbar .logo span { font-size: 18px; }
+  .navbar .nav-actions .btn-ticket { padding: 6px 14px; font-size: 12px; }
+
+  /* 双飞翼 → 单列 */
+  .wing { display: none; }
+  .main { padding: 16px 16px 8px; }
+
+  /* 轮播图 */
+  .carousel { height: 320px; border-radius: 12px; }
+  .carousel .slide .caption { font-size: 18px; padding: 28px 20px 16px; }
+  .carousel .slide .caption small { font-size: 12px; }
+  .carousel .arrow { width: 36px; height: 36px; font-size: 16px; }
+  .carousel .arrow.prev { left: 10px; }
+  .carousel .arrow.next { right: 10px; }
+
+  /* 卡片 */
+  .gallery .card-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .gallery .card img { height: 180px; }
+  .gallery .section-title { font-size: 20px; }
+
+  /* 页脚 */
+  .footer .footer-inner { padding: 0 32px; }
+  .footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+
+/* ---- 手机 (≤768px) ---- */
+@media (max-width: 768px) {
+  /* 导航栏 → 汉堡菜单 */
+  .navbar { padding: 0 16px; height: 56px; }
+
+  .hamburger { display: flex; }
+
+  /* 桌面菜单默认隐藏 */
+  .navbar .nav-links {
+    display: flex; flex-direction: column; gap: 0;
+    position: fixed; top: 56px; left: 0; right: 0;
+    background: linear-gradient(180deg, rgba(26,10,0,.98) 0%, rgba(45,18,5,.97) 100%);
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s ease, padding .35s ease;
+    z-index: 99;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  }
+  .navbar .nav-links.show {
+    max-height: 360px; padding: 8px 0;
+  }
+  .navbar .nav-links li { text-align: center; }
+  .navbar .nav-links a {
+    display: block; padding: 14px 20px; font-size: 16px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .navbar .nav-links a::after { display: none; }
+
+  .navbar .logo .icon { width: 30px; height: 30px; font-size: 16px; border-radius: 6px; }
+  .navbar .logo span { font-size: 16px; letter-spacing: 2px; }
+
+  .navbar .nav-actions { gap: 8px; }
+  .navbar .nav-actions .btn-ticket { padding: 6px 12px; font-size: 12px; }
+
+  /* 双飞翼 → 单列 */
+  .wing { display: none; }
+  .main { padding: 12px 10px 6px; }
+
+  /* 轮播图 */
+  .carousel { height: 220px; border-radius: 10px; margin-bottom: 20px; }
+  .carousel .slide .caption {
+    font-size: 15px; padding: 22px 14px 10px; letter-spacing: 2px;
+  }
+  .carousel .slide .caption small { font-size: 11px; letter-spacing: 1px; }
+  .carousel .arrow { width: 30px; height: 30px; font-size: 14px; }
+  .carousel .arrow.prev { left: 6px; }
+  .carousel .arrow.next { right: 6px; }
+  .carousel .dots { bottom: 10px; gap: 6px; }
+  .carousel .dots span { width: 7px; height: 7px; }
+  .carousel .dots span.active { width: 20px; border-radius: 4px; }
+
+  /* 卡片 → 单列 */
+  .gallery .card-grid { grid-template-columns: 1fr; gap: 12px; }
+  .gallery .card img { height: 200px; }
+  .gallery .section-title { font-size: 18px; margin-bottom: 14px; padding-left: 12px; border-left-width: 4px; }
+  .gallery .card .label { font-size: 14px; }
+
+  /* 页脚 */
+  .footer { padding-top: 28px; }
+  .footer .footer-inner { padding: 0 16px; }
+  .footer .footer-grid { grid-template-columns: 1fr; gap: 20px; padding-bottom: 20px; }
+  .footer .footer-about h3 { font-size: 17px; }
+  .footer .footer-about p { font-size: 13px; line-height: 1.8; }
+  .footer .footer-links h3 { font-size: 16px; }
+  .footer .footer-links a { font-size: 13px; }
+  .footer .footer-copyright { font-size: 11px; padding: 12px 0; }
+
+  /* 浮动广告缩小 */
+  .float-ad { width: 110px; padding: 12px 10px; font-size: 11px; border-radius: 10px; }
+  .float-ad .ad-title { font-size: 14px; letter-spacing: 1px; }
+  .float-ad .ad-sub { font-size: 10px; }
+
+  /* 全屏遮罩提示 */
+  .overlay .close-hint { top: 12px; right: 16px; font-size: 13px; }
+}
 </style>
 </head>
 <body>
 
 <!-- ==========================================
      一级布局元素1: 导航栏
-     二级元素: logo | 导航菜单 | 搜索/购票按钮
      ========================================== -->
 <nav class="navbar">
-  <!-- 二级1: logo -->
   <div class="logo">
     <div class="icon">殷</div>
     <span>古都安阳</span>
   </div>
 
-  <!-- 二级2: 导航菜单 -->
-  <ul class="nav-links">
-    <li><a href="#">首页</a></li>
+  <!-- 📱 汉堡菜单按钮（仅手机端显示） -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+
+  <ul class="nav-links" id="navMenu">
+    <li><a href="#" onclick="closeMenu()">首页</a></li>
     <li><a href="https://baike.baidu.com/item/%E6%AE%B7%E5%A2%9F/3908528" target="_blank">殷墟遗址</a></li>
     <li><a href="https://www.thdxg.net/" target="_blank">太行风光</a></li>
     <li><a href="https://baike.baidu.com/item/%E6%96%87%E5%B3%B0%E5%A1%94/14038" target="_blank">文峰塔</a></li>
@@ -297,32 +407,26 @@ body {
     <li><a href="https://www.wzbwg.com/" target="_blank">文字博物馆</a></li>
   </ul>
 
-  <!-- 二级3: 搜索与购票按钮 -->
   <div class="nav-actions">
-    <button class="btn-ticket"onclick="window.open('image/在线购票.jpg')">在线购票</button>
+    <button class="btn-ticket" onclick="window.open('image/在线购票.jpg')">在线购票</button>
   </div>
 </nav>
 
 <!-- ==========================================
      一级布局元素2: 双飞翼布局
-     二级元素: 左侧竖图 | 中间主体 | 右侧竖图
      ========================================== -->
 <div class="wrapper">
-  <!-- 二级1: 左侧固定竖图 -->
   <aside class="wing left">
     <img src="image/zuo.png" alt="甲骨故里">
     <div class="wing-text">甲骨故里</div>
   </aside>
 
-  <!-- 二级2: 中间主体 -->
   <main class="main">
 
     <!-- ==========================================
          一级布局元素3: 轮播图
-         二级元素: 轮播容器 | 左右箭头 | 指示点
          ========================================== -->
     <div class="carousel" id="carousel">
-      <!-- 二级1: 轮播滑动容器 -->
       <div class="slides" id="slides">
         <div class="slide">
           <img src="image/yxbug.jpg" alt="殷墟">
@@ -345,10 +449,8 @@ body {
           <div class="caption">中国文字博物馆<small>中华文字之家 · 文明之光</small></div>
         </div>
       </div>
-      <!-- 二级2: 左右箭头 -->
       <button class="arrow prev" onclick="prevSlide()">&#9664;</button>
       <button class="arrow next" onclick="nextSlide()">&#9654;</button>
-      <!-- 二级3: 底部指示点 -->
       <div class="dots" id="dots">
         <span class="active" onclick="goSlide(0)"></span>
         <span onclick="goSlide(1)"></span>
@@ -360,14 +462,10 @@ body {
 
     <!-- ==========================================
          一级布局元素4: 景点卡片区
-         二级元素: 区域标题 | 卡片网格 | 卡片项
          ========================================== -->
     <section class="gallery">
-      <!-- 二级1: 区域标题 -->
       <h2 class="section-title">安阳 · 值得一去</h2>
-      <!-- 二级2: 卡片网格 -->
       <div class="card-grid">
-        <!-- 二级3: 卡片项（共6张） -->
         <div class="card" onclick="openFull('image/yxyz.jpg')">
           <img src="image/yxyz.jpg" alt="殷墟博物苑">
           <div class="label">殷墟博物苑</div>
@@ -397,7 +495,6 @@ body {
 
   </main>
 
-  <!-- 二级3: 右侧固定竖图 -->
   <aside class="wing right">
     <img src="image/you.png" alt="魅力古都">
     <div class="wing-text">魅力古都</div>
@@ -406,12 +503,10 @@ body {
 
 <!-- ==========================================
      一级布局元素5: 页脚
-     二级元素: 关于安阳 | 快速链接 | 版权信息
      ========================================== -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-grid">
-      <!-- 二级1: 关于安阳 -->
       <div class="footer-about">
         <h3>古都安阳</h3>
         <p>
@@ -421,7 +516,6 @@ body {
           有太行大峡谷的壮美风光，是一座承载三千年文明的魅力之城。
         </p>
       </div>
-      <!-- 二级2: 快速链接 -->
       <div class="footer-links">
         <h3>快速链接</h3>
         <ul>
@@ -432,11 +526,10 @@ body {
           <li><a href="https://zhuanlan.zhihu.com/p/570420615" target="_blank">旅游攻略</a></li>
         </ul>
       </div>
-      <!-- 二级2扩展: 联系方式 -->
       <div class="footer-links">
         <h3>联系我们</h3>
         <ul>
-          <li><a href="#">安阳市王小灰旅游有限公司</a></li>
+          <li><a href="image/wxh.jpg" target="_blank">安阳市王小灰旅游有限公司</a></li>
           <li><a href="#">电话：0372-5668331</a></li>
           <li><a href="#">邮箱：wangxiaohui666@google.com</a></li>
           <li><a href="https://map.baidu.com/search/?q=安阳市殷都区水冶镇厚街电竞" target="_blank">地址：安阳市殷都区水冶镇广场厚街</a></li>
@@ -444,7 +537,6 @@ body {
       </div>
     </div>
   </div>
-  <!-- 二级3: 版权信息 -->
   <div class="footer-copyright">
     <p>&copy; 2025 王小灰爱旅游网 | 魅力古都 · 文字之都 | </p>
   </div>
@@ -463,8 +555,19 @@ body {
 </div>
 
 <script>
-// ============ JavaScript组件1: 轮播图（高质量JS组件） ============
-// 功能: 自动轮播、箭头切换、指示点点击、循环播放、4秒间隔
+// ============ 📱 汉堡菜单 ============
+function toggleMenu() {
+  var menu = document.getElementById('navMenu');
+  var btn = document.getElementById('hamburger');
+  menu.classList.toggle('show');
+  btn.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('navMenu').classList.remove('show');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// ============ 轮播图 ============
 var cur = 0; var total = 5;
 var slides = document.getElementById('slides');
 var dots = document.querySelectorAll('#dots span');
@@ -477,7 +580,7 @@ function prevSlide() { cur = (cur - 1 + total) % total; updateSlide(); }
 function goSlide(i) { cur = i; updateSlide(); }
 setInterval(nextSlide, 4000);
 
-// ============ JavaScript组件2: 全屏图片查看 ============
+// ============ 全屏图片查看 ============
 function openFull(src) {
   document.getElementById('fullImg').src = src;
   document.getElementById('overlay').classList.add('show');
@@ -488,23 +591,44 @@ function closeFull() {
   document.body.style.overflow = '';
 }
 
-// ============ JavaScript组件3: 浮动广告拖拽 ============
+// ============ 浮动广告拖拽（支持触摸） ============
 var ad = document.getElementById('floatAd');
 var dragging = false, startX, startY;
 var adX = window.innerWidth - 150, adY = 120;
 ad.style.left = adX + 'px'; ad.style.top = adY + 'px';
-ad.addEventListener('mousedown', function(e) {
-  dragging = true; startX = e.clientX - adX; startY = e.clientY - adY;
-  ad.style.animation = 'none'; e.preventDefault();
-});
-document.addEventListener('mousemove', function(e) {
+
+function onDragStart(e) {
+  dragging = true;
+  ad.style.animation = 'none';
+  var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  startX = clientX - adX; startY = clientY - adY;
+}
+function onDragMove(e) {
   if (!dragging) return;
-  adX = Math.max(0, Math.min(e.clientX - startX, window.innerWidth - 140));
-  adY = Math.max(60, Math.min(e.clientY - startY, window.innerHeight - 110));
+  e.preventDefault();
+  var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  adX = Math.max(0, Math.min(clientX - startX, window.innerWidth - ad.offsetWidth));
+  adY = Math.max(56, Math.min(clientY - startY, window.innerHeight - ad.offsetHeight));
   ad.style.left = adX + 'px'; ad.style.top = adY + 'px';
-});
-document.addEventListener('mouseup', function() {
+}
+function onDragEnd() {
   if (dragging) { dragging = false; ad.style.animation = 'floatBounce 3s ease-in-out infinite'; }
+}
+
+ad.addEventListener('mousedown', onDragStart);
+ad.addEventListener('touchstart', onDragStart, {passive: false});
+document.addEventListener('mousemove', onDragMove);
+document.addEventListener('touchmove', onDragMove, {passive: false});
+document.addEventListener('mouseup', onDragEnd);
+document.addEventListener('touchend', onDragEnd);
+
+// 窗口大小改变时广告保持在可视范围内
+window.addEventListener('resize', function() {
+  adX = Math.min(adX, window.innerWidth - ad.offsetWidth);
+  adY = Math.min(adY, window.innerHeight - ad.offsetHeight);
+  ad.style.left = adX + 'px'; ad.style.top = adY + 'px';
 });
 </script>
 </body>
