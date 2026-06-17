@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古都安阳 · 魅力名城</title>
+<style>
+/* ===========================
+   全局重置 & 古风变体
+   =========================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Noto Serif SC", "STSong", "SimSun", "Microsoft YaHei", serif;
+  background: #f7f3eb; color: #3a2a1a;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(200,145,58,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(139,90,43,.05) 0%, transparent 50%);
+  min-height: 100vh;
+}
+
+/* ===========================
+   一级布局元素1: 导航栏
+   二级: logo | 导航菜单 | 搜索/购票按钮
+   =========================== */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(180deg, rgba(26,10,0,.97) 0%, rgba(45,18,5,.95) 100%);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  box-shadow: 0 2px 24px rgba(0,0,0,.35);
+  border-bottom: 1px solid rgba(200,145,58,.15);
+}
+/* 二级1: logo */
+.navbar .logo { display: flex; align-items: center; gap: 12px; }
+.navbar .logo .icon {
+  width: 40px; height: 40px; background: linear-gradient(135deg, #d4a54a, #c8913a);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #1a0a00; font-weight: bold;
+  box-shadow: 0 0 16px rgba(200,145,58,.3);
+}
+.navbar .logo span {
+  font-size: 22px; font-weight: bold;
+  background: linear-gradient(180deg, #e8c97a, #c8913a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; letter-spacing: 4px;
+}
+/* 二级2: 导航菜单 */
+.navbar .nav-links { display: flex; gap: 36px; list-style: none; }
+.navbar .nav-links a {
+  color: #c0b0a0; text-decoration: none; font-size: 15px;
+  transition: all .3s; position: relative; padding: 4px 0; letter-spacing: 2px;
+}
+.navbar .nav-links a::after {
+  content: ""; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%) scaleX(0);
+  width: 100%; height: 2px; background: #c8913a; transition: transform .3s; border-radius: 1px;
+}
+.navbar .nav-links a:hover { color: #f5d89a; }
+.navbar .nav-links a:hover::after { transform: translateX(-50%) scaleX(1); }
+/* 二级3: 搜索与购票按钮 */
+.navbar .nav-actions { display: flex; align-items: center; gap: 14px; }
+
+.navbar .nav-actions .btn-ticket {
+  padding: 8px 20px; border-radius: 20px; border: none; cursor: pointer;
+  background: linear-gradient(135deg, #c8913a, #d4a54a);
+  color: #1a0a00; font-size: 14px; font-weight: bold;
+  transition: all .3s; box-shadow: 0 2px 12px rgba(200,145,58,.25);
+  letter-spacing: 1px;
+}
+.navbar .nav-actions .btn-ticket:hover {
+  transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,145,58,.4);
+}
+
+/* ===========================
+   一级布局元素2: 双飞翼布局
+   二级: 左侧竖图 | 中间主体 | 右侧竖图
+   =========================== */
+.wrapper { display: flex; max-width: 1440px; margin: 0 auto; }
+/* 二级1 & 二级3: 两侧竖图 */
+.wing {
+  width: 110px; flex-shrink: 0; position: sticky; top: 64px;
+  height: calc(100vh - 64px); overflow: hidden; z-index: 1;
+  transition: all .4s;
+}
+.wing::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,10,0,.5) 0%, transparent 30%, transparent 70%, rgba(26,10,0,.5) 100%);
+  z-index: 1; pointer-events: none;
+}
+.wing img { width: 100%; height: 100%; object-fit: cover; }
+.wing-text {
+  position: absolute; z-index: 3; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  writing-mode: vertical-rl; color: #f5e6c8; font-size: 20px; letter-spacing: 16px;
+  font-weight: bold; text-shadow: 0 0 20px rgba(0,0,0,.8), 0 0 4px rgba(200,145,58,.6);
+  background: rgba(0,0,0,.2); padding: 24px 10px; border-radius: 4px;
+}
+/* 二级2: 中间主体 */
+.main { flex: 1; min-width: 0; padding: 24px 36px 12px; }
+
+/* ===========================
+   一级布局元素3: 轮播图
+   二级: 轮播容器 | 箭头 | 指示点
+   =========================== */
+.carousel {
+  position: relative; width: 100%; height: 440px; overflow: hidden;
+  border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.2); margin-bottom: 36px;
+  border: 1px solid rgba(200,145,58,.12);
+}
+/* 二级1: 轮播滑动容器 */
+.carousel .slides { display: flex; width: 500%; height: 100%; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+.carousel .slide { width: 20%; height: 100%; position: relative; flex-shrink: 0; }
+.carousel .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carousel .slide::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.5) 100%);
+  pointer-events: none;
+}
+.carousel .slide .caption {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  background: linear-gradient(transparent, rgba(0,0,0,.65));
+  color: #fff; padding: 40px 36px 24px; font-size: 24px; letter-spacing: 4px;
+  font-weight: bold; text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.carousel .slide .caption small {
+  display: block; font-size: 14px; font-weight: 400; letter-spacing: 2px;
+  opacity: .85; margin-top: 4px;
+}
+/* 二级2: 左右箭头 */
+.carousel .arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,.15); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 20px;
+  cursor: pointer; z-index: 5; transition: all .3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.carousel .arrow:hover { background: rgba(200,145,58,.5); border-color: rgba(200,145,58,.6); transform: translateY(-50%) scale(1.1); }
+.carousel .arrow.prev { left: 20px; }
+.carousel .arrow.next { right: 20px; }
+/* 二级3: 底部指示点 */
+.carousel .dots {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 10px; z-index: 5;
+}
+.carousel .dots span {
+  width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.4);
+  cursor: pointer; transition: all .35s; box-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+.carousel .dots span.active {
+  background: linear-gradient(135deg, #e8c97a, #c8913a);
+  width: 28px; border-radius: 6px; box-shadow: 0 0 10px rgba(200,145,58,.5);
+}
+
+/* ===========================
+   一级布局元素4: 景点卡片区
+   二级: 区域标题 | 卡片网格 | 卡片项
+   =========================== */
+.gallery { margin-bottom: 12px; }
+/* 二级1: 区域标题 */
+.gallery .section-title {
+  font-size: 24px; color: #3d1c00; margin-bottom: 20px; padding-left: 16px;
+  border-left: 5px solid #c8913a; letter-spacing: 4px; font-weight: bold;
+  display: flex; align-items: center; gap: 10px;
+}
+.gallery .section-title::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(200,145,58,.4), transparent);
+}
+/* 二级2: 卡片网格 */
+.gallery .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* 二级3: 卡片项 */
+.gallery .card {
+  border-radius: 12px; overflow: hidden; cursor: pointer; position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,.1); transition: all .4s cubic-bezier(.4,0,.2,1);
+  border: 1px solid rgba(0,0,0,.06);
+}
+.gallery .card:hover {
+  transform: translateY(-8px); box-shadow: 0 16px 36px rgba(0,0,0,.2);
+  border-color: rgba(200,145,58,.3);
+}
+.gallery .card img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform .5s; }
+.gallery .card:hover img { transform: scale(1.08); }
+.gallery .card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.6) 100%);
+  transition: opacity .3s;
+}
+.gallery .card:hover::after { opacity: .9; }
+.gallery .card .label {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  color: #fff; padding: 16px 12px 14px; font-size: 15px; text-align: center;
+  letter-spacing: 2px; font-weight: bold;
+  transition: transform .4s;
+}
+.gallery .card:hover .label { transform: translateY(-4px); }
+
+/* ===========================
+   一级布局元素5: 页脚
+   二级: 关于安阳 | 快速链接 | 版权信息
+   =========================== */
+.footer {
+  background: linear-gradient(180deg, #1f0e05 0%, #140600 100%);
+  color: #b0a090; padding: 48px 0 0;
+  border-top: 3px solid rgba(200,145,58,.25);
+}
+.footer .footer-inner { max-width: 1440px; margin: 0 auto; padding: 0 150px; }
+.footer .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 36px; }
+/* 二级1: 关于安阳 */
+.footer .footer-about h3 {
+  font-size: 20px; color: #e8c97a; margin-bottom: 14px; letter-spacing: 3px;
+  position: relative; padding-bottom: 10px;
+}
+.footer .footer-about h3::after {
+  content: ""; position: absolute; bottom: 0; left: 0;
+  width: 40px; height: 2px; background: rgba(200,145,58,.5); border-radius: 1px;
+}
+.footer .footer-about p { font-size: 14px; line-height: 2; color: #a09080; }
+/* 二级2: 快速链接 & 联系方式 */
+.footer .footer-links h3 {
+  font-size: 18px; color: #e8c97a; margin-bottom: 14px; letter-spacing: 2px;
+  position: relative; padding-bottom: 10px;
+}
+.footer .footer-links h3::after {
+  content: ""; position: absolute; bottom: 0; left: 0;
+  width: 30px; height: 2px; background: rgba(200,145,58,.35); border-radius: 1px;
+}
+.footer .footer-links ul { list-style: none; }
+.footer .footer-links li { margin-bottom: 10px; }
+.footer .footer-links a {
+  color: #a09080; text-decoration: none; font-size: 14px;
+  transition: all .3s; padding-left: 0;
+}
+.footer .footer-links a:hover { color: #e8c97a; padding-left: 6px; }
+/* 二级3: 版权信息 */
+.footer .footer-copyright {
+  text-align: center; padding: 18px 0; font-size: 13px; color: #706050;
+  border-top: 1px solid rgba(255,255,255,.06);
+  letter-spacing: 1px;
+}
+
+/* ===========================
+   全屏遮罩 (JavaScript组件)
+   =========================== */
+.overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94);
+  z-index: 999; justify-content: center; align-items: center; cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+.overlay.show { display: flex; animation: fadeIn .3s ease; }
+.overlay img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 0 60px rgba(0,0,0,.6); }
+.overlay .close-hint {
+  position: absolute; top: 24px; right: 36px; color: rgba(255,255,255,.6);
+  font-size: 15px; letter-spacing: 2px; pointer-events: none;
+}
+
+/* ===========================
+   浮动广告 (JavaScript组件)
+   =========================== */
+.float-ad {
+  position: fixed; z-index: 200; width: 140px; padding: 16px 12px;
+  background: linear-gradient(135deg, #d4380d, #e65c20);
+  color: #fff; border-radius: 12px; text-align: center;
+  font-size: 13px; cursor: pointer;
+  box-shadow: 0 6px 24px rgba(212,56,13,.45), 0 0 0 1px rgba(255,255,255,.1) inset;
+  animation: floatBounce 3s ease-in-out infinite; user-select: none;
+}
+.float-ad .ad-title { font-size: 16px; font-weight: bold; letter-spacing: 2px; }
+.float-ad .ad-sub { font-size: 12px; margin-top: 6px; opacity: .92; line-height: 1.7; }
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-14px) rotate(.5deg); }
+  75% { transform: translateY(-6px) rotate(-.3deg); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- ==========================================
+     一级布局元素1: 导航栏
+     二级元素: logo | 导航菜单 | 搜索/购票按钮
+     ========================================== -->
+<nav class="navbar">
+  <!-- 二级1: logo -->
+  <div class="logo">
+    <div class="icon">殷</div>
+    <span>古都安阳</span>
+  </div>
+
+  <!-- 二级2: 导航菜单 -->
+  <ul class="nav-links">
+    <li><a href="#">首页</a></li>
+    <li><a href="https://baike.baidu.com/item/%E6%AE%B7%E5%A2%9F/3908528" target="_blank">殷墟遗址</a></li>
+    <li><a href="https://www.thdxg.net/" target="_blank">太行风光</a></li>
+    <li><a href="https://baike.baidu.com/item/%E6%96%87%E5%B3%B0%E5%A1%94/14038" target="_blank">文峰塔</a></li>
+    <li><a href="https://www.cnhqq.com/" target="_blank">红旗渠</a></li>
+    <li><a href="https://www.wzbwg.com/" target="_blank">文字博物馆</a></li>
+  </ul>
+
+  <!-- 二级3: 搜索与购票按钮 -->
+  <div class="nav-actions">
+    <button class="btn-ticket"onclick="window.open('image/在线购票.jpg')">在线购票</button>
+  </div>
+</nav>
+
+<!-- ==========================================
+     一级布局元素2: 双飞翼布局
+     二级元素: 左侧竖图 | 中间主体 | 右侧竖图
+     ========================================== -->
+<div class="wrapper">
+  <!-- 二级1: 左侧固定竖图 -->
+  <aside class="wing left">
+    <img src="image/zuo.png" alt="甲骨故里">
+    <div class="wing-text">甲骨故里</div>
+  </aside>
+
+  <!-- 二级2: 中间主体 -->
+  <main class="main">
+
+    <!-- ==========================================
+         一级布局元素3: 轮播图
+         二级元素: 轮播容器 | 左右箭头 | 指示点
+         ========================================== -->
+    <div class="carousel" id="carousel">
+      <!-- 二级1: 轮播滑动容器 -->
+      <div class="slides" id="slides">
+        <div class="slide">
+          <img src="image/yxbug.jpg" alt="殷墟">
+          <div class="caption">殷墟遗址<small>世界文化遗产 · 甲骨文发现地</small></div>
+        </div>
+        <div class="slide">
+          <img src="image/thdxg.jpg" alt="太行大峡谷">
+          <div class="caption">太行大峡谷<small>国家5A级景区 · 百里画廊</small></div>
+        </div>
+        <div class="slide">
+          <img src="image/wft.jpg" alt="文峰塔">
+          <div class="caption">文峰塔<small>千年古塔 · 安阳城市地标</small></div>
+        </div>
+        <div class="slide">
+          <img src="image/hqq1.jpg" alt="红旗渠">
+          <div class="caption">红旗渠<small>人工天河 · 世界第八大奇迹</small></div>
+        </div>
+        <div class="slide">
+          <img src="image/wzbug1.jpg" alt="文字博物馆">
+          <div class="caption">中国文字博物馆<small>中华文字之家 · 文明之光</small></div>
+        </div>
+      </div>
+      <!-- 二级2: 左右箭头 -->
+      <button class="arrow prev" onclick="prevSlide()">&#9664;</button>
+      <button class="arrow next" onclick="nextSlide()">&#9654;</button>
+      <!-- 二级3: 底部指示点 -->
+      <div class="dots" id="dots">
+        <span class="active" onclick="goSlide(0)"></span>
+        <span onclick="goSlide(1)"></span>
+        <span onclick="goSlide(2)"></span>
+        <span onclick="goSlide(3)"></span>
+        <span onclick="goSlide(4)"></span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         一级布局元素4: 景点卡片区
+         二级元素: 区域标题 | 卡片网格 | 卡片项
+         ========================================== -->
+    <section class="gallery">
+      <!-- 二级1: 区域标题 -->
+      <h2 class="section-title">安阳 · 值得一去</h2>
+      <!-- 二级2: 卡片网格 -->
+      <div class="card-grid">
+        <!-- 二级3: 卡片项（共6张） -->
+        <div class="card" onclick="openFull('image/yxyz.jpg')">
+          <img src="image/yxyz.jpg" alt="殷墟博物苑">
+          <div class="label">殷墟博物苑</div>
+        </div>
+        <div class="card" onclick="openFull('image/thdxg1.jpg')">
+          <img src="image/thdxg1.jpg" alt="太行大峡谷">
+          <div class="label">太行大峡谷</div>
+        </div>
+        <div class="card" onclick="openFull('image/wft.jpg')">
+          <img src="image/wft.jpg" alt="文峰塔">
+          <div class="label">文峰塔</div>
+        </div>
+        <div class="card" onclick="openFull('image/hqq.jpg')">
+          <img src="image/hqq.jpg" alt="红旗渠">
+          <div class="label">红旗渠</div>
+        </div>
+        <div class="card" onclick="openFull('image/wzbug1.jpg')">
+          <img src="image/wzbug1.jpg" alt="中国文字博物馆">
+          <div class="label">中国文字博物馆</div>
+        </div>
+        <div class="card" onclick="openFull('image/ylc.jpg')">
+          <img src="image/ylc.jpg" alt="羑里城">
+          <div class="label">羑里城</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 二级3: 右侧固定竖图 -->
+  <aside class="wing right">
+    <img src="image/you.png" alt="魅力古都">
+    <div class="wing-text">魅力古都</div>
+  </aside>
+</div>
+
+<!-- ==========================================
+     一级布局元素5: 页脚
+     二级元素: 关于安阳 | 快速链接 | 版权信息
+     ========================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <!-- 二级1: 关于安阳 -->
+      <div class="footer-about">
+        <h3>古都安阳</h3>
+        <p>
+          安阳，古称殷、邺城，位于河南省最北部，是中国八大古都之一，
+          甲骨文的故乡、周易的发源地、红旗渠精神的诞生地。
+          这里有世界文化遗产殷墟，有"人工天河"红旗渠，
+          有太行大峡谷的壮美风光，是一座承载三千年文明的魅力之城。
+        </p>
+      </div>
+      <!-- 二级2: 快速链接 -->
+      <div class="footer-links">
+        <h3>快速链接</h3>
+        <ul>
+          <li><a href="https://baike.baidu.com/item/%E6%AE%B7%E5%A2%9F/3908528" target="_blank">殷墟遗址</a></li>
+          <li><a href="https://www.thdxg.net/" target="_blank">太行大峡谷</a></li>
+          <li><a href="https://www.cnhqq.com/" target="_blank">红旗渠</a></li>
+          <li><a href="https://www.wzbwg.com/" target="_blank">文字博物馆</a></li>
+          <li><a href="https://zhuanlan.zhihu.com/p/570420615" target="_blank">旅游攻略</a></li>
+        </ul>
+      </div>
+      <!-- 二级2扩展: 联系方式 -->
+      <div class="footer-links">
+        <h3>联系我们</h3>
+        <ul>
+          <li><a href="#">安阳市王小灰旅游有限公司</a></li>
+          <li><a href="#">电话：0372-5668331</a></li>
+          <li><a href="#">邮箱：wangxiaohui666@google.com</a></li>
+          <li><a href="https://map.baidu.com/search/?q=安阳市殷都区水冶镇厚街电竞" target="_blank">地址：安阳市殷都区水冶镇广场厚街</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- 二级3: 版权信息 -->
+  <div class="footer-copyright">
+    <p>&copy; 2025 王小灰爱旅游网 | 魅力古都 · 文字之都 | </p>
+  </div>
+</footer>
+
+<!-- ============ 全屏遮罩（JS组件） ============ -->
+<div class="overlay" id="overlay" onclick="closeFull()">
+  <span class="close-hint">点击任意处关闭 ✕</span>
+  <img id="fullImg" src="" alt="">
+</div>
+
+<!-- ============ 浮动广告（JS组件） ============ -->
+<div class="float-ad" id="floatAd">
+  <div class="ad-title">📢 广告招商</div>
+  <div class="ad-sub">黄金展位 · 虚位以待<br>电话：+86 15518816871</div>
+</div>
+
+<script>
+// ============ JavaScript组件1: 轮播图（高质量JS组件） ============
+// 功能: 自动轮播、箭头切换、指示点点击、循环播放、4秒间隔
+var cur = 0; var total = 5;
+var slides = document.getElementById('slides');
+var dots = document.querySelectorAll('#dots span');
+function updateSlide() {
+  slides.style.transform = 'translateX(-' + (cur * 20) + '%)';
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
+}
+function nextSlide() { cur = (cur + 1) % total; updateSlide(); }
+function prevSlide() { cur = (cur - 1 + total) % total; updateSlide(); }
+function goSlide(i) { cur = i; updateSlide(); }
+setInterval(nextSlide, 4000);
+
+// ============ JavaScript组件2: 全屏图片查看 ============
+function openFull(src) {
+  document.getElementById('fullImg').src = src;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeFull() {
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ============ JavaScript组件3: 浮动广告拖拽 ============
+var ad = document.getElementById('floatAd');
+var dragging = false, startX, startY;
+var adX = window.innerWidth - 150, adY = 120;
+ad.style.left = adX + 'px'; ad.style.top = adY + 'px';
+ad.addEventListener('mousedown', function(e) {
+  dragging = true; startX = e.clientX - adX; startY = e.clientY - adY;
+  ad.style.animation = 'none'; e.preventDefault();
+});
+document.addEventListener('mousemove', function(e) {
+  if (!dragging) return;
+  adX = Math.max(0, Math.min(e.clientX - startX, window.innerWidth - 140));
+  adY = Math.max(60, Math.min(e.clientY - startY, window.innerHeight - 110));
+  ad.style.left = adX + 'px'; ad.style.top = adY + 'px';
+});
+document.addEventListener('mouseup', function() {
+  if (dragging) { dragging = false; ad.style.animation = 'floatBounce 3s ease-in-out infinite'; }
+});
+</script>
+</body>
+</html>
