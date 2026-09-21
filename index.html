@@ -217,6 +217,64 @@
       .data-number { font-size: 2.2rem !important; }
       .hero-title { font-size: 2.2rem !important; }
     }
+
+    /* ===== Carousel 轮播图 ===== */
+    .carousel-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;          /* 手机：偏竖版，浏览更友好 */
+      overflow: hidden;
+      background: #111640;
+    }
+    @media (min-width: 768px) {
+      .carousel-frame { aspect-ratio: 16 / 9; }   /* 桌面/全屏：宽屏 */
+    }
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      position: relative;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px; height: 40px;
+      border-radius: 9999px;
+      background: rgba(10, 14, 39, 0.55);
+      color: #e8e6e1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      border: 1px solid rgba(93, 156, 236, 0.35);
+      transition: background 0.3s ease, color 0.3s ease;
+      z-index: 2;
+    }
+    .carousel-btn:hover { background: rgba(93, 156, 236, 0.5); color: #fff; }
+    .carousel-btn-prev { left: 12px; }
+    .carousel-btn-next { right: 12px; }
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 9999px;
+      border: 0;
+      background: rgba(232, 230, 225, 0.35);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .carousel-dot-active {
+      width: 22px;
+      background: #e74c3c;
+    }
   </style>
 </head>
 
@@ -240,7 +298,7 @@
   <div class="relative z-10 max-w-3xl mx-auto">
     <!-- Tag -->
     <p class="font-eng text-accent tracking-[0.3em] text-sm md:text-base mb-6 uppercase animate-fade-in">
-      THE 11TH CHINA DATA JOURNALISM COMPETITION
+      The 9th (2026) National College Students' Digital Editing Innovation Competition
     </p>
     <div class="divider-accent"></div>
 
@@ -454,6 +512,115 @@
         当诈骗瞄准孩子：短视频与游戏私聊成为重灾区
       </p>
       <div class="divider-red" style="margin-left:20px;"></div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!--  轮播图：5 张关键数据图集（框架）                                 -->
+    <!--  替换图片：把每个 .carousel-media 的 style 里 background-image    -->
+    <!--  换成 url('你的图片路径')，建议图片宽度 ≥1600px 更清晰。          -->
+    <!-- ================================================================ -->
+    <div class="reveal mb-12">
+      <div class="carousel relative bg-deep2 rounded-2xl border border-deep3 shadow-lg overflow-hidden" data-carousel>
+
+        <div class="carousel-frame">
+          <div class="carousel-track">
+
+            <!-- 第 1 张 -->
+            <figure class="carousel-slide">
+              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
+                   style="background-image: linear-gradient(135deg, #1e3a5f 0%, #111640 100%);">
+                <div class="text-center">
+                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">01</div>
+                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
+                </div>
+              </div>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
+                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（一）</p>
+                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
+              </figcaption>
+            </figure>
+
+            <!-- 第 2 张 -->
+            <figure class="carousel-slide">
+              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
+                   style="background-image: linear-gradient(135deg, #6d2720 0%, #111640 100%);">
+                <div class="text-center">
+                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">02</div>
+                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
+                </div>
+              </div>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
+                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（二）</p>
+                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
+              </figcaption>
+            </figure>
+
+            <!-- 第 3 张 -->
+            <figure class="carousel-slide">
+              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
+                   style="background-image: linear-gradient(135deg, #7a5410 0%, #111640 100%);">
+                <div class="text-center">
+                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">03</div>
+                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
+                </div>
+              </div>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
+                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（三）</p>
+                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
+              </figcaption>
+            </figure>
+
+            <!-- 第 4 张 -->
+            <figure class="carousel-slide">
+              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
+                   style="background-image: linear-gradient(135deg, #1b5e33 0%, #111640 100%);">
+                <div class="text-center">
+                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">04</div>
+                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
+                </div>
+              </div>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
+                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（四）</p>
+                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
+              </figcaption>
+            </figure>
+
+            <!-- 第 5 张 -->
+            <figure class="carousel-slide">
+              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
+                   style="background-image: linear-gradient(135deg, #4e2a6b 0%, #111640 100%);">
+                <div class="text-center">
+                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">05</div>
+                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
+                </div>
+              </div>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
+                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（五）</p>
+                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
+              </figcaption>
+            </figure>
+
+          </div>
+
+          <!-- 左右箭头 -->
+          <button type="button" class="carousel-btn carousel-btn-prev" aria-label="上一张">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button type="button" class="carousel-btn carousel-btn-next" aria-label="下一张">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <!-- 指示点 -->
+        <div class="carousel-dots">
+          <button type="button" class="carousel-dot carousel-dot-active" aria-label="第1张"></button>
+          <button type="button" class="carousel-dot" aria-label="第2张"></button>
+          <button type="button" class="carousel-dot" aria-label="第3张"></button>
+          <button type="button" class="carousel-dot" aria-label="第4张"></button>
+          <button type="button" class="carousel-dot" aria-label="第5张"></button>
+        </div>
+
+      </div>
     </div>
 
     <!-- Alert banner -->
@@ -790,7 +957,7 @@
         </h3>
         <div class="space-y-4 text-sm leading-relaxed text-text-dim">
           <p>
-            本数据新闻作品为第十一届中国数据新闻大赛参赛作品，聚焦6-14岁低龄未成年人互联网使用与网络受骗问题。
+            本数据新闻作品为第九届全国大学生数字编辑创新大赛参赛作品，聚焦6-14岁低龄未成年人互联网使用与网络受骗问题。
           </p>
           <p>
             通过整合CNNIC、公安部、最高检等权威机构公开数据，以数据可视化与叙事设计相结合的方式，全景呈现低龄触网现状、受骗风险及管控政策成效。
@@ -810,8 +977,8 @@
 
     <div class="mt-14 pt-8 border-t border-deep3 text-center text-xs text-text-dim reveal">
       <p class="font-serif-cn">触网之殇 · 低龄未成年人网络使用与受骗数据全景报告 &copy; 2026</p>
-      <p class="font-eng mt-1">THE DIGITAL DILEMMA · Data Panorama Report on Juvenile Internet Usage & Fraud</p>
-      <p class="mt-3">第十一届中国数据新闻大赛参赛作品 · 仅供学习交流 · 数据截至2025年12月</p>
+      <p class="font-eng mt-1">The 9th (2026) National College Students' Digital Editing Innovation Competition</p>
+      <p class="mt-3">第九届全国大学生数字编辑创新大赛参赛作品 · 仅供学习交流 · 数据截至2025年12月</p>
     </div>
   </div>
 </footer>
@@ -909,23 +1076,62 @@
 
   // ========== Chart 2: First touch age ==========
   (function() {
-    const chart = echarts.init(document.getElementById('chart-first-touch'));
-    chart.setOption({
-      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
-      legend: { orient: 'vertical', right: '5%', top: 'center', textStyle: { color: colors.textDim } },
-      series: [{
-        name: '首次触网时间', type: 'pie', radius: ['45%', '75%'], center: ['40%', '50%'],
-        emphasis: { label: { fontSize: 18, fontWeight: 'bold' } },
-        label: { color: colors.textDim },
-        data: [
-          { value: 34.2, name: '小学前（学龄前）', itemStyle: { color: colors.red } },
-          { value: 28.5, name: '小学1-3年级', itemStyle: { color: colors.orange } },
-          { value: 18.3, name: '小学4-6年级', itemStyle: { color: colors.yellow } },
-          { value: 19.0, name: '初中及以上', itemStyle: { color: colors.accent } },
-        ]
-      }]
-    });
-    window.addEventListener('resize', () => chart.resize());
+    const dom = document.getElementById('chart-first-touch');
+    if (!dom) return;
+    const chart = echarts.init(dom);
+
+    function render() {
+      // 用图容器的真实宽度判断（该图在 md 两栏布局里，窗口宽度 ≠ 图实际可用宽度）
+      const w = dom.clientWidth || dom.offsetWidth || 0;
+      const compact = w > 0 && w < 520;
+      chart.setOption({
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+        // 图例统一放底部横排，彻底消除「右侧竖排图例 vs 左侧饼图」的左右重叠
+        legend: {
+          orient: 'horizontal',
+          left: 'center',
+          bottom: 0,
+          itemWidth: 12,
+          itemHeight: 12,
+          itemGap: compact ? 10 : 16,
+          textStyle: { color: colors.textDim, fontSize: compact ? 10 : 12 },
+        },
+        series: [{
+          name: '首次触网时间', type: 'pie',
+          radius: compact ? ['38%', '56%'] : ['40%', '60%'],
+          center: ['50%', '44%'],
+          avoidLabelOverlap: true,
+          emphasis: { label: { fontSize: 16, fontWeight: 'bold' } },
+          label: {
+            color: colors.textDim,
+            fontSize: compact ? 10 : 12,
+            // 窄容器只显示百分比，名称交给底部图例，避免长名称被裁切
+            formatter: compact ? '{d}%' : '{b}\n{d}%',
+            width: compact ? 70 : 110,
+            overflow: 'break',
+          },
+          labelLine: {
+            length: compact ? 10 : 16,
+            length2: compact ? 6 : 10,
+            lineStyle: { color: colors.textDim, width: 1 },
+          },
+          data: [
+            { value: 34.2, name: '小学前（学龄前）', itemStyle: { color: colors.red } },
+            { value: 28.5, name: '小学1-3年级', itemStyle: { color: colors.orange } },
+            { value: 18.3, name: '小学4-6年级', itemStyle: { color: colors.yellow } },
+            { value: 19.0, name: '初中及以上', itemStyle: { color: colors.accent } },
+          ]
+        }]
+      });
+    }
+
+    render();
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => { render(); chart.resize(); });
+      ro.observe(dom);
+    } else {
+      window.addEventListener('resize', () => { render(); chart.resize(); });
+    }
   })();
 
   // ========== Chart 3: App usage ==========
@@ -967,24 +1173,51 @@
 
   // ========== Chart 3b: Short video platform ==========
   (function() {
-    const chart = echarts.init(document.getElementById('chart-shortvideo-platform'));
-    chart.setOption({
-      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
-      series: [{
-        type: 'pie', radius: ['50%', '80%'], center: ['50%', '50%'],
-        roseType: 'area',
-        label: { color: colors.textDim, formatter: '{b}\n{d}%' },
-        data: [
-          { value: 60.4, name: '抖音', itemStyle: { color: '#000' } },
-          { value: 59.3, name: '快手', itemStyle: { color: colors.orange } },
-          { value: 45.0, name: '微信视频号', itemStyle: { color: colors.green } },
-          { value: 38.5, name: 'B站', itemStyle: { color: '#fb7299' } },
-          { value: 18.2, name: '小红书', itemStyle: { color: colors.red } },
-          { value: 12.0, name: '其他', itemStyle: { color: colors.textDim } },
-        ]
-      }]
-    });
-    window.addEventListener('resize', () => chart.resize());
+    const dom = document.getElementById('chart-shortvideo-platform');
+    if (!dom) return;
+    const chart = echarts.init(dom);
+
+    function render() {
+      const w = dom.clientWidth || dom.offsetWidth || 0;
+      const compact = w > 0 && w < 520;
+      chart.setOption({
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+        series: [{
+          type: 'pie',
+          radius: compact ? ['35%', '60%'] : ['46%', '72%'],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          avoidLabelOverlap: true,
+          label: {
+            color: colors.textDim,
+            fontSize: compact ? 10 : 12,
+            formatter: '{b}\n{d}%',
+            width: compact ? 70 : 90,
+            overflow: 'break',
+          },
+          labelLine: {
+            length: compact ? 12 : 18,
+            length2: compact ? 8 : 12,
+            lineStyle: { color: colors.textDim, width: 1 },
+          },
+          data: [
+            { value: 60.4, name: '抖音', itemStyle: { color: '#000' } },
+            { value: 59.3, name: '快手', itemStyle: { color: colors.orange } },
+            { value: 45.0, name: '微信视频号', itemStyle: { color: colors.green } },
+            { value: 38.5, name: 'B站', itemStyle: { color: '#fb7299' } },
+            { value: 18.2, name: '小红书', itemStyle: { color: colors.red } },
+            { value: 12.0, name: '其他', itemStyle: { color: colors.textDim } },
+          ]
+        }]
+      });
+    }
+    render();
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => { render(); chart.resize(); });
+      ro.observe(dom);
+    } else {
+      window.addEventListener('resize', () => { render(); chart.resize(); });
+    }
   })();
 
   // ========== Chart 4: Bypass methods ==========
@@ -1062,61 +1295,56 @@
     const dom = document.getElementById('chart-security-events');
     if (!dom) return;
     const chart = echarts.init(dom);
-    const isM = window.innerWidth < 768;
-    chart.setOption({
-      tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
-      legend: {
-        orient: isM ? 'horizontal' : 'vertical',
-        right: isM ? 'center' : '3%',
-        top: isM ? 'bottom' : 'center',
-        bottom: isM ? 0 : 'auto',
-        itemGap: isM ? 8 : 12,
-        textStyle: { color: colors.textDim, fontSize: isM ? 9 : 11 }
-      },
-      series: [{
-        name: '安全事件', type: 'pie',
-        radius: isM ? ['40%', '65%'] : ['40%', '68%'],
-        center: isM ? ['50%', '42%'] : ['35%', '48%'],
-        avoidLabelOverlap: true,
-        itemStyle: { borderColor: colors.deep2, borderWidth: 2 },
-        label: {
-          show: true,
-          position: 'outside',
-          formatter: '{b}\n{d}%',
-          color: colors.textDim,
-          fontSize: isM ? 9 : 11,
-          distanceToLabelLine: 4,
-        },
-        labelLine: {
-          length: isM ? 18 : 22,
-          length2: isM ? 10 : 14,
-          lineStyle: { color: colors.textDim, width: 1 }
-        },
-        data: [
-          { value: 27.6, name: '遭遇过安全事件', itemStyle: { color: colors.red } },
-          { value: 12.7, name: '网上诈骗', itemStyle: { color: colors.orange } },
-          { value: 12.8, name: '账号密码被盗', itemStyle: { color: colors.yellow } },
-          { value: 8.8, name: '设备感染病毒', itemStyle: { color: colors.purple } },
-          { value: 72.4, name: '未遭遇安全事件', itemStyle: { color: colors.accent } },
-        ]
-      }]
-    });
-    window.addEventListener('resize', function() {
-      var isM2 = window.innerWidth < 768;
+
+    function render() {
+      const w = dom.clientWidth || dom.offsetWidth || 0;
+      const compact = w > 0 && w < 520;
       chart.setOption({
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.red },
         legend: {
-          orient: isM2 ? 'horizontal' : 'vertical',
-          right: isM2 ? 'center' : '3%',
-          top: isM2 ? 'bottom' : 'center',
-          bottom: isM2 ? 0 : 'auto',
+          orient: 'horizontal',
+          left: 'center',
+          bottom: 0,
+          itemGap: compact ? 8 : 14,
+          itemWidth: 12,
+          itemHeight: 12,
+          textStyle: { color: colors.textDim, fontSize: compact ? 9 : 11 }
         },
         series: [{
-          radius: isM2 ? ['40%', '65%'] : ['40%', '68%'],
-          center: isM2 ? ['50%', '42%'] : ['35%', '48%'],
+          name: '安全事件', type: 'pie',
+          radius: compact ? ['38%', '56%'] : ['42%', '62%'],
+          center: ['50%', '44%'],
+          avoidLabelOverlap: true,
+          itemStyle: { borderColor: colors.deep2, borderWidth: 2 },
+          label: {
+            show: true,
+            position: 'outside',
+            formatter: '{d}%',
+            color: colors.textDim,
+            fontSize: compact ? 9 : 11,
+          },
+          labelLine: {
+            length: compact ? 12 : 16,
+            length2: compact ? 8 : 10,
+            lineStyle: { color: colors.textDim, width: 1 }
+          },
+          data: [
+            { value: 27.6, name: '遭遇过安全事件', itemStyle: { color: colors.red } },
+            { value: 12.7, name: '网上诈骗', itemStyle: { color: colors.orange } },
+            { value: 12.8, name: '账号密码被盗', itemStyle: { color: colors.yellow } },
+            { value: 8.8, name: '设备感染病毒', itemStyle: { color: colors.purple } },
+            { value: 72.4, name: '未遭遇安全事件', itemStyle: { color: colors.accent } },
+          ]
         }]
       });
-      chart.resize();
-    });
+    }
+    render();
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => { render(); chart.resize(); });
+      ro.observe(dom);
+    } else {
+      window.addEventListener('resize', () => { render(); chart.resize(); });
+    }
   })();
 
   // ========== Chart 7: Fraud channel ==========
@@ -1343,8 +1571,63 @@
 
   console.log('🔍 触网之殇 · 低龄未成年人网络使用与受骗数据全景报告 — 已就绪');
   console.log('📊 数据来源：CNNIC、公安部、最高检、山东省公安厅等权威机构');
-  console.log('🏆 第十一届中国数据新闻大赛参赛作品');
+  console.log('🏆 第九届全国大学生数字编辑创新大赛参赛作品');
 
+})();
+</script>
+
+<!-- ========== Carousel 轮播图逻辑 ========== -->
+<script>
+(function() {
+  'use strict';
+  const root = document.querySelector('[data-carousel]');
+  if (!root) return;
+  const track = root.querySelector('.carousel-track');
+  const slides = Array.from(root.querySelectorAll('.carousel-slide'));
+  const dots = Array.from(root.querySelectorAll('.carousel-dot'));
+  const prevBtn = root.querySelector('.carousel-btn-prev');
+  const nextBtn = root.querySelector('.carousel-btn-next');
+  if (!track || !slides.length) return;
+
+  let index = 0;
+  let timer = null;
+
+  function goTo(i) {
+    index = ((i % slides.length) + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach((d, di) => d.classList.toggle('carousel-dot-active', di === index));
+  }
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  function start() { stop(); timer = setInterval(next, 5000); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+  if (nextBtn) nextBtn.addEventListener('click', () => { next(); start(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); start(); });
+  dots.forEach((d, di) => d.addEventListener('click', () => { goTo(di); start(); }));
+
+  // 手机触摸滑动
+  let startX = 0, startY = 0;
+  track.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? next() : prev();
+      start();
+    }
+  }, { passive: true });
+
+  // 鼠标悬停时暂停自动播放
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+
+  goTo(0);
+  start();
 })();
 </script>
 
