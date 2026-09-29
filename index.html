@@ -165,12 +165,6 @@
       text-shadow: 2px 2px 0 rgba(231,76,60,0.5), -2px -2px 0 rgba(93,156,236,0.5);
     }
 
-    /* Sticky chart containers */
-    .sticky-chart {
-      position: sticky;
-      top: 80px;
-    }
-
     /* Section title line */
     .section-title-line {
       position: relative;
@@ -218,63 +212,6 @@
       .hero-title { font-size: 2.2rem !important; }
     }
 
-    /* ===== Carousel 轮播图 ===== */
-    .carousel-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;          /* 手机：偏竖版，浏览更友好 */
-      overflow: hidden;
-      background: #111640;
-    }
-    @media (min-width: 768px) {
-      .carousel-frame { aspect-ratio: 16 / 9; }   /* 桌面/全屏：宽屏 */
-    }
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .carousel-slide {
-      flex: 0 0 100%;
-      height: 100%;
-      position: relative;
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px; height: 40px;
-      border-radius: 9999px;
-      background: rgba(10, 14, 39, 0.55);
-      color: #e8e6e1;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      border: 1px solid rgba(93, 156, 236, 0.35);
-      transition: background 0.3s ease, color 0.3s ease;
-      z-index: 2;
-    }
-    .carousel-btn:hover { background: rgba(93, 156, 236, 0.5); color: #fff; }
-    .carousel-btn-prev { left: 12px; }
-    .carousel-btn-next { right: 12px; }
-    .carousel-dots {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 0;
-    }
-    .carousel-dot {
-      width: 8px; height: 8px;
-      border-radius: 9999px;
-      border: 0;
-      background: rgba(232, 230, 225, 0.35);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .carousel-dot-active {
-      width: 22px;
-      background: #e74c3c;
-    }
   </style>
 </head>
 
@@ -304,7 +241,7 @@
 
     <!-- Main title -->
     <h1 class="hero-title font-serif-cn text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-wider animate-fade-in">
-      <span class="glitch-text">触网之殇</span>
+      <span class="glitch-text">触网之殇，筑栏有方</span>
     </h1>
 
     <!-- Subtitle -->
@@ -335,6 +272,41 @@
     </div>
   </div>
 </header>
+
+<!-- ================================================================ -->
+<!--  VIDEO — 数据全景视频                                            -->
+<!-- ================================================================ -->
+<section class="max-w-6xl mx-auto px-6 pt-16 md:pt-20">
+  <div class="reveal">
+    <div class="relative rounded-2xl overflow-hidden border border-deep3 bg-deep"
+         style="box-shadow: 0 0 0 1px rgba(93,156,236,0.12), 0 24px 60px -20px rgba(0,0,0,0.65);">
+      <video id="report-video"
+             class="block mx-auto w-auto h-auto max-w-full max-h-[72vh] object-contain bg-deep"
+             src="e.mp4"
+             controls playsinline preload="metadata"
+             width="1280" height="720"></video>
+    </div>
+    <p class="text-center text-xs text-text-dim mt-4 tracking-wide">
+      <i class="fa-solid fa-circle-play mr-2 text-accent"></i>触网之殇 · 数据全景视频
+    </p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    'use strict';
+    var v = document.getElementById('report-video');
+    if (!v) return;
+    function fit() {
+      if (v.videoWidth && v.videoHeight) {
+        v.setAttribute('width', v.videoWidth);
+        v.setAttribute('height', v.videoHeight);
+      }
+    }
+    v.addEventListener('loadedmetadata', fit);
+    if (v.readyState >= 1) fit();
+  })();
+</script>
 
 <!-- ================================================================ -->
 <!--  CORE DATA DASHBOARD - Key metrics                              -->
@@ -403,10 +375,10 @@
     <div class="reveal mb-14">
       <p class="font-eng text-sm text-accent tracking-[0.2em] uppercase mb-2">Part One</p>
       <h2 class="section-title-line font-serif-cn text-3xl md:text-4xl font-bold">
-        第一章 · 低龄互联网使用现状
+        第一章 · 触网低龄化：一场不可逆的数字浪潮
       </h2>
       <p class="font-serif-cn text-lg md:text-xl text-text-dim mt-3 font-bold">
-        触网低龄化：一场不可逆的数字浪潮
+          低龄互联网使用现状 
       </p>
       <div class="divider-accent" style="margin-left:20px;"></div>
     </div>
@@ -506,121 +478,12 @@
     <div class="reveal mb-14">
       <p class="font-eng text-sm text-alert-red tracking-[0.2em] uppercase mb-2">Part Two</p>
       <h2 class="section-title-line font-serif-cn text-3xl md:text-4xl font-bold">
-        第二章 · 低龄群体网络受骗数据
+        第二章 · 当诈骗瞄准孩子：短视频与游戏私聊成为重灾区
       </h2>
       <p class="font-serif-cn text-lg md:text-xl text-text-dim mt-3 font-bold">
-        当诈骗瞄准孩子：短视频与游戏私聊成为重灾区
+        低龄群体网络受骗数据
       </p>
       <div class="divider-red" style="margin-left:20px;"></div>
-    </div>
-
-    <!-- ================================================================ -->
-    <!--  轮播图：5 张关键数据图集（框架）                                 -->
-    <!--  替换图片：把每个 .carousel-media 的 style 里 background-image    -->
-    <!--  换成 url('你的图片路径')，建议图片宽度 ≥1600px 更清晰。          -->
-    <!-- ================================================================ -->
-    <div class="reveal mb-12">
-      <div class="carousel relative bg-deep2 rounded-2xl border border-deep3 shadow-lg overflow-hidden" data-carousel>
-
-        <div class="carousel-frame">
-          <div class="carousel-track">
-
-            <!-- 第 1 张 -->
-            <figure class="carousel-slide">
-              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
-                   style="background-image: linear-gradient(135deg, #1e3a5f 0%, #111640 100%);">
-                <div class="text-center">
-                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">01</div>
-                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
-                </div>
-              </div>
-              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
-                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（一）</p>
-                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
-              </figcaption>
-            </figure>
-
-            <!-- 第 2 张 -->
-            <figure class="carousel-slide">
-              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
-                   style="background-image: linear-gradient(135deg, #6d2720 0%, #111640 100%);">
-                <div class="text-center">
-                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">02</div>
-                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
-                </div>
-              </div>
-              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
-                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（二）</p>
-                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
-              </figcaption>
-            </figure>
-
-            <!-- 第 3 张 -->
-            <figure class="carousel-slide">
-              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
-                   style="background-image: linear-gradient(135deg, #7a5410 0%, #111640 100%);">
-                <div class="text-center">
-                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">03</div>
-                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
-                </div>
-              </div>
-              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
-                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（三）</p>
-                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
-              </figcaption>
-            </figure>
-
-            <!-- 第 4 张 -->
-            <figure class="carousel-slide">
-              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
-                   style="background-image: linear-gradient(135deg, #1b5e33 0%, #111640 100%);">
-                <div class="text-center">
-                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">04</div>
-                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
-                </div>
-              </div>
-              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
-                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（四）</p>
-                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
-              </figcaption>
-            </figure>
-
-            <!-- 第 5 张 -->
-            <figure class="carousel-slide">
-              <div class="carousel-media w-full h-full bg-cover bg-center flex items-center justify-center"
-                   style="background-image: linear-gradient(135deg, #4e2a6b 0%, #111640 100%);">
-                <div class="text-center">
-                  <div class="font-eng text-5xl md:text-7xl font-bold" style="color: rgba(232,230,225,0.18);">05</div>
-                  <p class="text-xs md:text-sm text-text-dim mt-2">轮播图占位 · 替换为实际图片</p>
-                </div>
-              </div>
-              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-14 pb-4 text-left">
-                <p class="text-sm md:text-base font-bold text-text-main">轮播图标题（五）</p>
-                <p class="text-xs text-text-dim mt-0.5">图片说明 / 数据来源</p>
-              </figcaption>
-            </figure>
-
-          </div>
-
-          <!-- 左右箭头 -->
-          <button type="button" class="carousel-btn carousel-btn-prev" aria-label="上一张">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button type="button" class="carousel-btn carousel-btn-next" aria-label="下一张">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-
-        <!-- 指示点 -->
-        <div class="carousel-dots">
-          <button type="button" class="carousel-dot carousel-dot-active" aria-label="第1张"></button>
-          <button type="button" class="carousel-dot" aria-label="第2张"></button>
-          <button type="button" class="carousel-dot" aria-label="第3张"></button>
-          <button type="button" class="carousel-dot" aria-label="第4张"></button>
-          <button type="button" class="carousel-dot" aria-label="第5张"></button>
-        </div>
-
-      </div>
     </div>
 
     <!-- Alert banner -->
@@ -1171,46 +1034,157 @@
     window.addEventListener('resize', () => chart.resize());
   })();
 
-  // ========== Chart 3b: Short video platform ==========
+  // ========== Chart 3b: Short video platform —— WiFi 信号图 ==========
+  // 仅改变呈现方式：类别、数值、顺序完全沿用原饼图，不新增/修改任何数据。
+  // 编码规则：使用率越高 → 信号弧越靠外（视觉越靠上）、越粗；使用率越低 → 越靠内（越靠下）、越细。
   (function() {
     const dom = document.getElementById('chart-shortvideo-platform');
     if (!dom) return;
     const chart = echarts.init(dom);
 
+    const wifiData = [
+      { value: 60.4, name: '抖音',       color: 'douyin' },
+      { value: 59.3, name: '快手',       color: colors.orange },
+      { value: 45.0, name: '微信视频号', color: colors.green },
+      { value: 38.5, name: 'B站',        color: '#fb7299' },
+      { value: 18.2, name: '小红书',     color: colors.red },
+      { value: 12.0, name: '其他',       color: colors.textDim },
+    ];
+    const N = wifiData.length;
+    const maxValue = wifiData[0].value;
+    // 原饼图抖音用纯黑 #000，深色背景下描边不可见；改用抖音品牌青→红霓虹渐变（仅视觉适配，数据不变）
+    const douyinStroke = new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+      { offset: 0, color: '#25F4EE' },
+      { offset: 1, color: '#FE2C55' },
+    ]);
+    const strokeOf = d => d.color === 'douyin' ? douyinStroke : d.color;
+    const glowOf   = d => d.color === 'douyin' ? '#FE2C55' : d.color;
+
     function render() {
-      const w = dom.clientWidth || dom.offsetWidth || 0;
-      const compact = w > 0 && w < 520;
       chart.setOption({
-        tooltip: { trigger: 'item', backgroundColor: 'rgba(17,22,64,0.95)', borderColor: colors.accent },
+        animationDuration: 900,
+        animationEasing: 'cubicOut',
+        animationDelay: idx => idx * 120,
+        tooltip: {
+          trigger: 'item',
+          backgroundColor: 'rgba(17,22,64,0.95)',
+          borderColor: colors.accent,
+          formatter: p => '<b>' + p.data.name + '</b><br/>使用率：' + p.data.value + '%',
+        },
+        title: {
+          text: '短视频平台使用率',
+          left: 'center', top: 2,
+          textStyle: { color: colors.text, fontSize: 14, fontWeight: 'bold' },
+        },
+        grid: { left: 8, right: 8, top: 34, bottom: 56 },
+        xAxis: { type: 'value', show: false, min: 0, max: 100 },
+        yAxis: { type: 'value', show: false, min: 0, max: 100 },
         series: [{
-          type: 'pie',
-          radius: compact ? ['35%', '60%'] : ['46%', '72%'],
-          center: ['50%', '50%'],
-          roseType: 'area',
-          avoidLabelOverlap: true,
-          label: {
-            color: colors.textDim,
-            fontSize: compact ? 10 : 12,
-            formatter: '{b}\n{d}%',
-            width: compact ? 70 : 90,
-            overflow: 'break',
+          type: 'custom',
+          data: wifiData,
+          renderItem(params, api) {
+            const i = params.dataIndex;
+            const d = wifiData[i];
+            const W = api.getWidth();
+            const H = api.getHeight();
+            const base = api.coord([50, 0]);
+            const cx = base[0];   // 水平居中
+            const cy = base[1];   // 底部：WiFi 圆点位置
+            // 居中布局：弧尽量占满高度，横向留白由 W*0.44 约束，避免超宽时过度拉伸
+            const rMax = Math.min(W * 0.44, H * 0.80);
+            const rMin = rMax * 0.16;
+            // 数据按降序排列：i 越小值越大 → 半径越大（弧越靠外、越靠上）
+            const r = rMin + (rMax - rMin) * ((N - 1 - i) / (N - 1));
+            const lw = 3 + (d.value / maxValue) * 11;   // 值越大弧越粗
+            const pt = (rr, deg) => {
+              const a = deg * Math.PI / 180;
+              return [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+            };
+            const p1 = pt(r, -150);   // 弧左端
+            const p2 = pt(r, -30);    // 弧右端
+            const arcPath = 'M ' + p1[0] + ' ' + p1[1] +
+              ' A ' + r + ' ' + r + ' 0 0 1 ' + p2[0] + ' ' + p2[1];
+            const children = [
+              // 淡色参考弧：勾勒“信号刻度”质感
+              {
+                type: 'path',
+                shape: { pathData: arcPath, d: arcPath },
+                style: { fill: 'none', stroke: 'rgba(93,156,236,0.09)', lineWidth: lw + 5, lineCap: 'round' },
+              },
+              // 透明加粗命中区，方便悬浮触发 tooltip
+              {
+                type: 'path',
+                shape: { pathData: arcPath, d: arcPath },
+                style: { fill: 'none', stroke: 'rgba(0,0,0,0)', lineWidth: lw + 18 },
+              },
+              {
+                type: 'path',
+                shape: { pathData: arcPath, d: arcPath },
+                style: {
+                  fill: 'none',
+                  stroke: strokeOf(d),
+                  lineWidth: lw,
+                  lineCap: 'round',
+                  shadowColor: glowOf(d),
+                  shadowBlur: 9,
+                },
+              },
+            ];
+
+            // 底部圆点 + 光晕（仅最内弧一项）
+            if (i === N - 1) {
+              children.push({
+                type: 'circle',
+                shape: { cx: cx, cy: cy, r: 6 },
+                style: { fill: 'rgba(93,156,236,0.16)', shadowColor: colors.accent, shadowBlur: 16 },
+              });
+              children.push({
+                type: 'circle',
+                shape: { cx: cx, cy: cy, r: 3 },
+                style: { fill: colors.text, shadowColor: colors.text, shadowBlur: 10 },
+              });
+            }
+
+            // 底部紧凑图例：只在第 0 项绘制一次（色块 + 名称 + 数值）
+            if (i === 0) {
+              const cols = W < 360 ? 2 : 3;
+              const itemSlot = W < 360 ? Math.min(150, W / 2) : 120;
+              const blockW = itemSlot * cols;
+              const startX = Math.max(4, (W - blockW) / 2);
+              const startY = H + 14;
+              const rowH = 22;
+              wifiData.forEach((item, idx) => {
+                const col = idx % cols;
+                const row = Math.floor(idx / cols);
+                const lx = startX + col * itemSlot;
+                const ly = startY + row * rowH;
+                children.push({
+                  type: 'rect',
+                  silent: true,
+                  shape: { x: lx, y: ly - 4, width: 8, height: 8, r: 2 },
+                  style: { fill: strokeOf(item), shadowColor: glowOf(item), shadowBlur: 5 },
+                });
+                children.push({
+                  type: 'text',
+                  silent: true,
+                  style: {
+                    x: lx + 12, y: ly,
+                    text: item.name + ' ' + item.value + '%',
+                    textAlign: 'left',
+                    textVerticalAlign: 'middle',
+                    fill: colors.textDim,
+                    fontSize: 11,
+                    fontWeight: idx < 2 ? 'bold' : 'normal',
+                  },
+                });
+              });
+            }
+            return { type: 'group', children };
           },
-          labelLine: {
-            length: compact ? 12 : 18,
-            length2: compact ? 8 : 12,
-            lineStyle: { color: colors.textDim, width: 1 },
-          },
-          data: [
-            { value: 60.4, name: '抖音', itemStyle: { color: '#000' } },
-            { value: 59.3, name: '快手', itemStyle: { color: colors.orange } },
-            { value: 45.0, name: '微信视频号', itemStyle: { color: colors.green } },
-            { value: 38.5, name: 'B站', itemStyle: { color: '#fb7299' } },
-            { value: 18.2, name: '小红书', itemStyle: { color: colors.red } },
-            { value: 12.0, name: '其他', itemStyle: { color: colors.textDim } },
-          ]
-        }]
+        }],
       });
     }
+
     render();
     if (typeof ResizeObserver !== 'undefined') {
       const ro = new ResizeObserver(() => { render(); chart.resize(); });
@@ -1573,61 +1547,6 @@
   console.log('📊 数据来源：CNNIC、公安部、最高检、山东省公安厅等权威机构');
   console.log('🏆 第九届全国大学生数字编辑创新大赛参赛作品');
 
-})();
-</script>
-
-<!-- ========== Carousel 轮播图逻辑 ========== -->
-<script>
-(function() {
-  'use strict';
-  const root = document.querySelector('[data-carousel]');
-  if (!root) return;
-  const track = root.querySelector('.carousel-track');
-  const slides = Array.from(root.querySelectorAll('.carousel-slide'));
-  const dots = Array.from(root.querySelectorAll('.carousel-dot'));
-  const prevBtn = root.querySelector('.carousel-btn-prev');
-  const nextBtn = root.querySelector('.carousel-btn-next');
-  if (!track || !slides.length) return;
-
-  let index = 0;
-  let timer = null;
-
-  function goTo(i) {
-    index = ((i % slides.length) + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach((d, di) => d.classList.toggle('carousel-dot-active', di === index));
-  }
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
-
-  function start() { stop(); timer = setInterval(next, 5000); }
-  function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
-  if (nextBtn) nextBtn.addEventListener('click', () => { next(); start(); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); start(); });
-  dots.forEach((d, di) => d.addEventListener('click', () => { goTo(di); start(); }));
-
-  // 手机触摸滑动
-  let startX = 0, startY = 0;
-  track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-  track.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - startX;
-    const dy = e.changedTouches[0].clientY - startY;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-      dx < 0 ? next() : prev();
-      start();
-    }
-  }, { passive: true });
-
-  // 鼠标悬停时暂停自动播放
-  root.addEventListener('mouseenter', stop);
-  root.addEventListener('mouseleave', start);
-
-  goTo(0);
-  start();
 })();
 </script>
 
